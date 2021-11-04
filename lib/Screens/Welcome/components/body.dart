@@ -18,7 +18,10 @@ class Body extends StatelessWidget {
           children: <Widget>[
             Text(
               "Truco Online",
-              style: TextStyle(fontWeight: FontWeight.bold),
+              style: TextStyle(
+                  color: Colors.blue.shade900,
+                  fontSize: 30,
+                  fontWeight: FontWeight.bold),
             ),
             SizedBox(height: size.height * 0.05),
             Image.asset(
