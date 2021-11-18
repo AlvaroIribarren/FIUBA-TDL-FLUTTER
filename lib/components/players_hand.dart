@@ -1,45 +1,44 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/components/text_field_container.dart';
+import 'package:flutter_auth/components/card_back.dart';
+import 'package:flutter_auth/components/playing_card.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/card_model.dart';
+import 'package:flutter_auth/models/player_model.dart';
 
 class PlayersHandContainer extends StatelessWidget {
   final Widget child;
+  final PlayerModel player;
+  final double size;
+  final Function(CardModel) onPlayCard;
+
   const PlayersHandContainer({
     Key key,
     this.child,
+    this.player,
+    this.size = 1,
+    this.onPlayCard,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
-    Size size = MediaQuery.of(context).size;
-    return Stack(
-      children: [
-        Align(
-            alignment: Alignment.bottomLeft,
-            child: CardModel(
-              image: "1 ESPADA",
-              suit: "espada",
-              value: 1,
-              child: Text("1 espada"),
-            )),
-        Align(
-            alignment: Alignment.bottomCenter,
-            child: CardModel(
-              image: "7 ESPADA",
-              suit: "espada",
-              value: 7,
-              child: Text("7 espada"),
-            )),
-        Align(
-            alignment: Alignment.bottomRight,
-            child: CardModel(
-              image: "6 ESPADA",
-              suit: "espada",
-              value: 6,
-              child: Text("6 espada"),
-            )),
-      ],
-    );
+    return SizedBox(
+        height: CARD_HEIGHT * size,
+        width: double.infinity,
+        child: ListView.builder(
+          scrollDirection: Axis.horizontal,
+          itemCount: player.cards.length,
+          itemBuilder: (context, index) {
+            final card = player.cards[index];
+            return Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: PlayingCard(
+                card: card,
+                size: size,
+                visible: player.isHuman,
+                onPlayCard: onPlayCard,
+              ),
+            );
+          },
+        ));
   }
 }
