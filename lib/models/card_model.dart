@@ -5,12 +5,12 @@ import 'package:flutter_auth/components/rounded_button.dart';
 
 import '../constants.dart';
 
-enum Suit {
-  Swords,
-  Golds,
-  Clubs,
-  Cups,
-}
+// enum Suit {
+//   Swords,
+//   Golds,
+//   Clubs,
+//   Cups,
+// }
 
 class CardModel extends StatelessWidget {
   final String image;
@@ -21,7 +21,7 @@ class CardModel extends StatelessWidget {
   final bool visible;
 
   String get Value => value;
-  String get Suit => suit;
+  // String get Suit => suit;
   int get EnvidoValue => envidoValue;
 
   const CardModel({

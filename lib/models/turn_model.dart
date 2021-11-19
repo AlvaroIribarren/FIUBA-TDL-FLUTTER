@@ -1,4 +1,6 @@
+import 'package:flutter_auth/models/envido_action.dart';
 import 'package:flutter_auth/models/player_model.dart';
+import 'package:flutter_auth/models/turn_action.dart';
 
 class Turn {
   final List<PlayerModel> players;
@@ -21,5 +23,13 @@ class Turn {
 
   PlayerModel get otherPlayer {
     return players.firstWhere((p) => p != currentPlayer);
+  }
+
+  List<TurnAction> getTurnActions() {
+    if (this.currentPlayer == players[0] && this.currentPlayer.getEnvido) {
+      return [EnvidoAction(players: players)];
+    } else {
+      return [];
+    }
   }
 }

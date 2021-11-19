@@ -3,7 +3,9 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/models/card_model.dart';
 import 'package:flutter_auth/models/deck_model.dart';
+import 'package:flutter_auth/models/hand_model.dart';
 import 'package:flutter_auth/models/player_model.dart';
+import 'package:flutter_auth/models/turn_action.dart';
 import 'package:flutter_auth/models/turn_model.dart';
 
 class GameProvider with ChangeNotifier {
@@ -14,15 +16,15 @@ class GameProvider with ChangeNotifier {
   bool _envido;
 
   Turn _turn;
-  Turn get turn => _turn;
+  // Turn get turn => _turn;
 
   List<PlayerModel> _players = [];
   List<PlayerModel> get players => _players;
 
-  List<CardModel> _discards = [];
-  List<CardModel> get discards => _discards;
+  // List<CardModel> _discards = [];
+  // List<CardModel> get discards => _discards;
 
-  Map<String, dynamic> gameState = {};
+  // Map<String, dynamic> gameState = {};
 
   void newGame(List<PlayerModel> players) {
     print("Creating a new game");
@@ -75,14 +77,14 @@ class GameProvider with ChangeNotifier {
       envidoValue: 4,
       visible: true,
     );
-    var cards = [card1, card2, card3];
-    var cards2 = [card4, card5, card6];
-    players[0].addCards(cards2);
-    players[1].addCards(cards);
+    var hand1 = HandModel(cards: [card1, card2, card3]);
+    var hand2 = HandModel(cards: [card4, card5, card6]);
+    players[0].assignNewHand(hand1);
+    players[1].assignNewHand(hand2);
     players[0].setEnvido(true);
     players[1].setEnvido(true);
     _envido = false;
-    _discards = [];
+    // _discards = [];
   }
 
   bool canPlayCard(CardModel card) {
@@ -106,11 +108,9 @@ class GameProvider with ChangeNotifier {
   }) async {
     if (player != _turn.currentPlayer) return;
 
-    player.removeCard(card);
+    player.discardCard(card);
 
-    player.addDiscards(card);
-
-    _discards.add(card);
+    // _discards.add(card);
 
     _turn.actionCount += 1;
 
@@ -122,6 +122,10 @@ class GameProvider with ChangeNotifier {
   bool get canEndTurn {
     return true;
     //Si no jugó una carta, no podría pasar el turno
+  }
+
+  List<TurnAction> getTurnActions() {
+    return _turn.getTurnActions();
   }
 
   void endTurn() {
@@ -143,28 +147,26 @@ class GameProvider with ChangeNotifier {
     await Future.delayed(const Duration(milliseconds: 500));
 
     List<int> envido1 = [];
-    if (_envido) {
-      for (var i = 0; i < players[1].cards.length - 1; i++) {
-        for (var j = 1; j < players[1].cards.length; j++) {
-          if (players[1].cards[i].Suit == players[1].cards[j].Suit && i != j) {
-            envido1.add(players[1].cards[i].EnvidoValue +
-                players[1].cards[j].EnvidoValue);
-          }
-        }
-      }
-      print(envido1.reduce(max));
-      _envido = false;
-      endTurn();
-      return null;
-    }
+    // if (_envido) {
+    //   for (var i = 0; i < players[1].cards.length - 1; i++) {
+    //     for (var j = 1; j < players[1].cards.length; j++) {
+    //       if (players[1].cards[i].Suit == players[1].cards[j].Suit && i != j) {
+    //         envido1.add(players[1].cards[i].EnvidoValue +
+    //             players[1].cards[j].EnvidoValue);
+    //       }
+    //     }
+    //   }
+    //   print(envido1.reduce(max));
+    //   _envido = false;
+    //   endTurn();
+    //   return null;
+    // }
 
-    var card = getRandomElement(players[1].cards);
+    var card = getRandomElement(players[1].currentHand.cards);
 
-    players[1].removeCard(card);
+    players[1].discardCard(card);
 
-    players[1].addDiscards(card);
-
-    _discards.add(card);
+    // _discards.add(card);
 
     _turn.actionCount += 1;
 
