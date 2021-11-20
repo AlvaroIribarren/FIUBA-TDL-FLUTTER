@@ -1,16 +1,15 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/Welcome/components/body.dart';
-import '../models/cards.dart';
-import 'package:flutter_auth/Screens/Login/components/gameboard.dart';
+import 'package:flutter_auth/Screens/GameScreen/game_screen.dart';
+import 'package:flutter_auth/services/game_provider.dart';
+import 'package:provider/provider.dart';
 
 class MainScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
-    //var mazo = Mazo();
-
     return Scaffold(
-
-      body: const GameBoard(),
-    );
+        body: MultiProvider(
+      providers: [ChangeNotifierProvider(create: (_) => GameProvider())],
+      child: const GameScreen(),
+    ));
   }
 }

@@ -3,6 +3,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
 import 'package:flutter_auth/constants.dart';
+import 'package:flutter_auth/services/game_provider.dart';
+import 'package:provider/provider.dart';
 
 void main() async {
   runApp(MyApp());
@@ -10,6 +12,8 @@ void main() async {
 
 class MyApp extends StatelessWidget {
   // This widget is the root of your application.
+  const MyApp({Key key}) : super(key: key);
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(

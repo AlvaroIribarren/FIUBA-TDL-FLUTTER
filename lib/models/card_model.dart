@@ -1,26 +1,36 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/components/card_back.dart';
+import 'package:flutter_auth/components/rounded_button.dart';
 
-enum Suit {
-  Swords,
-  Golds,
-  Clubs,
-  Cups,
-}
+import '../constants.dart';
+
+// enum Suit {
+//   Swords,
+//   Golds,
+//   Clubs,
+//   Cups,
+// }
 
 class CardModel extends StatelessWidget {
   final String image;
+  final String value;
   final String suit;
-  final int value;
-  int order;
+  final int envidoValue;
   final Widget child;
-  CardModel({
+  final bool visible;
+
+  String get Value => value;
+  // String get Suit => suit;
+  int get EnvidoValue => envidoValue;
+
+  const CardModel({
     Key key,
     this.child,
     this.image,
-    this.suit,
     this.value,
-    this.order
+    this.envidoValue,
+    this.visible,
   }) : super(key: key);
 
   updateOrder(){
@@ -46,23 +56,32 @@ class CardModel extends StatelessWidget {
     }
 
   }
-  
+
   @override
   Widget build(BuildContext context) {
-    //this.updateOrder();
-    Size size = MediaQuery.of(context).size;
-    return SizedBox(
-      height: size.height * 0.4,
-      child: Container(
-        margin: EdgeInsets.symmetric(vertical: 10),
-        padding: EdgeInsets.symmetric(horizontal: 20, vertical: 5),
-        width: size.width * 0.3,
+    return Container(
+        height: CARD_HEIGHT * 1.5,
+        width: CARD_WIDTH * 1,
         decoration: BoxDecoration(
-          color: Colors.blue.shade100,
-          borderRadius: BorderRadius.circular(29),
+          borderRadius: BorderRadius.circular(4.8),
         ),
-        child: Text("${this.value} " + this.suit),
-      ),
-    );
+        clipBehavior: Clip.antiAlias,
+        child: visible
+            ? RoundedButton(
+                color: Colors.blue.shade100,
+                text: "$value",
+                press: () {
+                  print("$value");
+                },
+              )
+            : CardBack(
+                child: RoundedButton(
+                  color: Colors.black,
+                  text: "Boca Abajo",
+                  press: () {
+                    print("not visible");
+                  },
+                ),
+              ));
   }
 }
