@@ -24,5 +24,9 @@ class HandModel {
     discards.add(card);
   }
 
+  CardModel cardPlayedInTurn(int turn) {
+    return discards[turn];
+  }
+
   List<CardModel> get Discards => discards;
 }

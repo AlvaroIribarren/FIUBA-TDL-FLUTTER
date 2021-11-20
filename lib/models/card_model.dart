@@ -7,9 +7,9 @@ import '../constants.dart';
 
 enum Suit {
   Swords,
-   Golds,
-   Clubs,
-   Cups,
+  Golds,
+  Clubs,
+  Cups,
 }
 
 class CardModel extends StatelessWidget {
@@ -36,9 +36,10 @@ class CardModel extends StatelessWidget {
     this.visible,
   }) : super(key: key);
 
-  @override
-  bool operator ==(other) {
+  bool operator >(other) {
     // compare this to other
+    print("${this.order} > ${other.order}");
+    return this.order > other.order;
   }
 
   @override

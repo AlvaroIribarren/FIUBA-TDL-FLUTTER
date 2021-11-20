@@ -11,7 +11,7 @@ class Turn {
   PlayerModel currentPlayer;
   int playsCount;
   // List<bool> _cantoEnvido = [false, false];
-  int turnNumber;
+  double turnNumber;
 
   Turn({
     this.players,
@@ -22,10 +22,10 @@ class Turn {
   });
 
   void nextTurn() {
-    turnNumber += 1; // deberia ser +1/2
-    index += 1;
-    currentPlayer = index % 2 == 0 ? players[0] : players[1];
-    playsCount = 0;
+    turnNumber += 0.5; // deberia ser +1/2
+    // index += 1;
+    currentPlayer = otherPlayer;
+    // playsCount += 1;
   }
 
   PlayerModel get otherPlayer {
@@ -68,13 +68,25 @@ class Turn {
   }
 
   bool reachedEndOfTurn() {
+    print("playscount es: $playsCount");
     return playsCount % 2 == 0;
   }
 
   PlayerModel getLoserPlayer() {
-    var cardCurr = currentPlayer.currentHand.cardPlayedInTurn(turnNumber);
-    var cardOther = otherPlayer.currentHand.cardPlayedInTurn(turnNumber);
+    print(turnNumber);
+    var cardCurr =
+        currentPlayer.currentHand.cardPlayedInTurn(turnNumber.toInt());
+    var cardOther =
+        otherPlayer.currentHand.cardPlayedInTurn(turnNumber.toInt());
 
-    if (cardCurr > cardOther) {}
+    if (cardCurr > cardOther) {
+      return otherPlayer;
+    } else {
+      return currentPlayer;
+    }
+  }
+
+  asignarJugadorActual(PlayerModel player) {
+    currentPlayer = player;
   }
 }
