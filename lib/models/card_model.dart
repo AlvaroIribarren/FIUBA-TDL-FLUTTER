@@ -5,18 +5,19 @@ import 'package:flutter_auth/components/rounded_button.dart';
 
 import '../constants.dart';
 
-// enum Suit {
-//   Swords,
-//   Golds,
-//   Clubs,
-//   Cups,
-// }
+enum Suit {
+  Swords,
+   Golds,
+   Clubs,
+   Cups,
+}
 
 class CardModel extends StatelessWidget {
   final String image;
   final String value;
   final String suit;
   final int envidoValue;
+  final int order;
   final Widget child;
   final bool visible;
 
@@ -31,6 +32,7 @@ class CardModel extends StatelessWidget {
     this.value,
     this.suit,
     this.envidoValue,
+    this.order,
     this.visible,
   }) : super(key: key);
 
@@ -44,21 +46,9 @@ class CardModel extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAlias,
         child: visible
-            ? RoundedButton(
-                color: Colors.blue.shade100,
-                text: "$value",
-                press: () {
-                  print("$value");
-                },
-              )
+            ? Image.asset(image)
             : CardBack(
-                child: RoundedButton(
-                  color: Colors.black,
-                  text: "Boca Abajo",
-                  press: () {
-                    print("not visible");
-                  },
-                ),
+                child: Image.asset("assets/images/r0.png"),
               ));
   }
 }
