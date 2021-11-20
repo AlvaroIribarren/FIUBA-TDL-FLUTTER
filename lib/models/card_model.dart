@@ -37,6 +37,11 @@ class CardModel extends StatelessWidget {
   }) : super(key: key);
 
   @override
+  bool operator ==(other) {
+    // compare this to other
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Container(
         height: CARD_HEIGHT * 1.5,

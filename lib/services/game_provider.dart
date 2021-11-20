@@ -395,8 +395,8 @@ class GameProvider with ChangeNotifier {
     var hand2 = HandModel(cards: hands[1]);
     players[0].assignNewHand(hand1);
     players[1].assignNewHand(hand2);
-    players[0].setEnvido(true);
-    players[1].setEnvido(true);
+    // players[0].setEnvido(true);
+    // players[1].setEnvido(true);
     _envido = false;
     // _discards = [];
   }
@@ -406,12 +406,16 @@ class GameProvider with ChangeNotifier {
   }
 
   bool canEnvido(PlayerModel player) {
-    return player.getEnvido;
+    // return player.getEnvido;
+  }
+
+  cantarEnvido(PlayerModel player) {
+    _turn.seCantoEnvido(player);
   }
 
   void envido(PlayerModel player) {
     print("Envido gato!");
-    player.setEnvido(false);
+    // player.setEnvido(false);
     _envido = true;
     endTurn();
   }
@@ -426,11 +430,12 @@ class GameProvider with ChangeNotifier {
 
     // _discards.add(card);
 
-    _turn.actionCount += 1;
+    _turn.playsCount += 1;
 
-    player.setEnvido(false);
+    // player.setEnvido(false);
 
     endTurn();
+    // endPlay();
   }
 
   bool get canEndTurn {
@@ -439,10 +444,15 @@ class GameProvider with ChangeNotifier {
   }
 
   List<TurnAction> getTurnActions() {
-    return _turn.getTurnActions();
+    return _turn.getTurnActions(this);
   }
 
   void endTurn() {
+    if (_turn.reachedEndOfTurn()) {
+      var perdedor = _turn.getLoserPlayer();
+      _turn.asignarActual(perdedor)
+    }
+
     _turn.nextTurn();
 
     if (_turn.currentPlayer.isBot) {
@@ -459,6 +469,9 @@ class GameProvider with ChangeNotifier {
 
   Future<void> botTurn() async {
     await Future.delayed(const Duration(milliseconds: 500));
+
+    List<TurnAction> possibleActions = getTurnActions();
+    print(possibleActions);
 
     List<int> envido1 = [];
     // if (_envido) {
@@ -482,9 +495,9 @@ class GameProvider with ChangeNotifier {
 
     // _discards.add(card);
 
-    _turn.actionCount += 1;
+    _turn.playsCount += 1;
 
-    players[1].setEnvido(false);
+    // players[1].setEnvido(false);
 
     await Future.delayed(const Duration(milliseconds: 500));
 

@@ -8,13 +8,12 @@ class PlayerModel {
   // List<CardModel> cards;
   // List<CardModel> discards = [];
   HandModel currentHand;
-  bool envido;
+  bool cantoEnvido = false;
 
   PlayerModel({
     this.name,
     // this.cards = const [],
     this.isHuman = false,
-    this.envido = true,
     this.currentHand,
   });
 
@@ -42,11 +41,15 @@ class PlayerModel {
     return !isHuman;
   }
 
-  setEnvido(bool envido) {
-    this.envido = envido;
+  cantarEnvido() {
+    cantoEnvido = true;
   }
 
-  bool get getEnvido => this.envido;
+  // setEnvido(bool envido) {
+  //   this.envido = envido;
+  // }
+
+  // bool get getEnvido => this.envido;
 
   // List<CardModel> get Discards => discards;
 }

@@ -3,12 +3,14 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_auth/models/turn_action.dart';
 
-class EnvidoAction extends TurnAction {
-  final players;
+class CantarEnvidoAction extends TurnAction {
+  final model;
+  final playerOwner;
 
-  EnvidoAction({
-    this.players,
-  }) : super(players: players);
+  CantarEnvidoAction({
+    this.model,
+    this.playerOwner,
+  }) : super(model: model, playerOwner: playerOwner);
 
   @override
   Widget build(BuildContext context) {
@@ -21,8 +23,8 @@ class EnvidoAction extends TurnAction {
 
   @override
   executeAction() {
-    // TODO: implement executeAction
-    // throw UnimplementedError();
     print("ENVIDO!");
+    this.model.cantarEnvido(this.playerOwner);
+    // <otro jugador acepta o no>
   }
 }
