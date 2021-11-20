@@ -34,10 +34,7 @@ class PlayingCard extends StatelessWidget {
         ),
         clipBehavior: Clip.antiAlias,
         child: visible
-            ? RoundedButton(
-                color: Colors.blue.shade100,
-                text: "${card.Value}",
-              )
+            ? Image.asset(card.image)
             : CardBack(),
       ),
     );

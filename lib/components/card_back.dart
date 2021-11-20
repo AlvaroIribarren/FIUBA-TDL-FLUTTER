@@ -13,11 +13,10 @@ class CardBack extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: CARD_WIDTH * size,
-      height: CARD_HEIGHT * size,
-      color: Colors.black,
-      child: child,
+    return Image.asset("assets/images/r0.png",
+        width: CARD_WIDTH * size,
+        height: CARD_HEIGHT * size
     );
+
   }
 }
