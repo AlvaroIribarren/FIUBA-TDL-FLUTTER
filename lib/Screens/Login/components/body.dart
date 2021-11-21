@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_auth/Screens/Login/components/background.dart';
 import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
 import 'package:flutter_auth/Screens/main_screen.dart';
+import 'package:flutter_auth/api/LoginResponse.dart';
+import 'package:flutter_auth/api/api.dart';
 import 'package:flutter_auth/components/already_have_an_account_acheck.dart';
 import 'package:flutter_auth/components/rounded_button.dart';
 import 'package:flutter_auth/components/rounded_input_field.dart';
@@ -9,9 +11,9 @@ import 'package:flutter_auth/components/rounded_password_field.dart';
 import 'package:flutter_svg/svg.dart';
 
 class Body extends StatelessWidget {
-  const Body({
-    Key key,
-  }) : super(key: key);
+  String email = "";
+  String pass = "";
+  Api api = Api();
 
   @override
   Widget build(BuildContext context) {
@@ -36,23 +38,32 @@ class Body extends StatelessWidget {
             SizedBox(height: size.height * 0.03),
             RoundedInputField(
               hintText: "Email",
-              onChanged: (value) {},
+              onChanged: (value) {
+                email = value;
+              },
             ),
             RoundedPasswordField(
-              onChanged: (value) {},
+              onChanged: (value) {
+                pass = value;
+              },
             ),
             RoundedButton(
               color: Colors.green.shade400,
               text: "LOGIN",
-              press: () {
-                Navigator.push(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return MainScreen();
-                    },
-                  ),
-                );
+              press: () async {
+                LoginResponse response = await api.login(email, pass);
+
+                if (response.user.id != 0) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return MainScreen();
+                      },
+                    ),
+                    (Route<dynamic> route) => false,
+                  );
+                }
               },
             ),
             SizedBox(height: size.height * 0.03),

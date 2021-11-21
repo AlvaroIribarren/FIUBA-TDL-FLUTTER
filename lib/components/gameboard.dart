@@ -2,12 +2,17 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_auth/components/players_hand.dart';
 import 'package:flutter_auth/components/turn_actions.dart';
+import 'package:flutter_auth/components/user_data.dart';
 import 'package:flutter_auth/models/card_model.dart';
 import 'package:flutter_auth/services/game_provider.dart';
 import 'package:provider/provider.dart';
 
 class GameBoard extends StatelessWidget {
   const GameBoard({Key key}) : super(key: key);
+
+  Object getUserData() {
+    return {'id': 1, 'email': 'asd@asd'};
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -35,12 +40,7 @@ class GameBoard extends StatelessWidget {
                   ],
                 ),
               )
-            : Center(
-                child: Text(
-                  "Presiona el boton superior \n para comenzar un nuevo juego",
-                  textAlign: TextAlign.center,
-                ),
-              );
+            : Center(child: UserData());
       },
     );
   }

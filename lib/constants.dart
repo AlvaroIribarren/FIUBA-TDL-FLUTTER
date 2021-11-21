@@ -9,6 +9,15 @@ const lightLightBlue = Color(0XFFB3E5FC);
 const CARD_WIDTH = 226 / 2;
 const CARD_HEIGHT = 336 / 2;
 
+String urlString = "https://truco-server-tdl.herokuapp.com";
+String usersString = urlString + '/users';
+final base_url = Uri.parse(urlString);
+final users_url = Uri.parse(usersString);
+final login_url = Uri.parse(usersString + "/login");
+
+const OK_RESPONSE = 200;
+const CREATED_OK_RESPONSE = 201;
+
 var card1 = CardModel(
   image: "assets/images/c1.png",
   value: "1 COPA",
