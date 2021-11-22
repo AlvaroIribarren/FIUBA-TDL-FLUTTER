@@ -1,6 +1,7 @@
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/components/annotator.dart';
 import 'package:flutter_auth/constants.dart';
 import 'package:flutter_auth/models/card_model.dart';
 import 'package:flutter_auth/models/deck_model.dart';
@@ -15,6 +16,8 @@ class GameProvider with ChangeNotifier {
   }*/
 
   bool _envido;
+
+  Annotator annotator;
 
   Turn _turn;
   // Turn get turn => _turn;
@@ -34,6 +37,7 @@ class GameProvider with ChangeNotifier {
     _players = players;
     _turn = Turn(players: players, currentPlayer: players.first);
     setupBoard(players);
+    annotator = new Annotator();
     notifyListeners();
   }
 
@@ -64,6 +68,7 @@ class GameProvider with ChangeNotifier {
     var hand2 = HandModel(cards: hands[1]);
     players[0].assignNewHand(hand1);
     players[1].assignNewHand(hand2);
+    _turn = Turn(players: players, currentPlayer: players.first);
     // players[0].setEnvido(true);
     // players[1].setEnvido(true);
     _envido = false;
@@ -124,8 +129,16 @@ class GameProvider with ChangeNotifier {
       print("final de turno. currplayer: ${_turn.currentPlayer.name}");
       var perdedor = _turn.getLoserPlayer();
       _turn.asignarJugadorActual(perdedor);
+      annotator.addPointsPerTurn(_turn.otherPlayer, 1);
       print(
           "final de turno, cambio actual. currplayer: ${_turn.currentPlayer.name}");
+    }
+
+    print("player points: ${annotator.turnPointsPlayer}");
+    print("bot points: ${annotator.turnPointsBot}");
+
+    if (annotator.endRound()) {
+      return endRound();
     }
 
     _turn.nextTurn();
@@ -180,5 +193,14 @@ class GameProvider with ChangeNotifier {
     await Future.delayed(const Duration(milliseconds: 500));
 
     endTurn();
+  }
+
+  void endRound() {
+    print("player round points: ${annotator.roundPointsPlayer}");
+    print("bot round points: ${annotator.roundPointsBot}");
+
+    setupBoard(players);
+    annotator.newRound();
+    notifyListeners();
   }
 }
