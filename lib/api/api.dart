@@ -10,8 +10,19 @@ import '../constants.dart';
 class Api {
   Api();
 
-  void getUsers() async {
-    print(await http.read(users_url));
+  Future<List<UserSchema>> getUsers() async {
+    var response = await http.read(users_url);
+    List<UserSchema> users = [];
+
+    var decoded = json.decode(response);
+    var values = decoded["items"];
+
+    for (var item in values) {
+      UserSchema actualUser = UserSchema.fromJson(item);
+      users.add(actualUser);
+    }
+
+    return users;
   }
 
   Future<UserSchema> postNewUser(email, pass) async {
@@ -54,5 +65,15 @@ class Api {
         return res;
       }
     }
+  }
+
+  void addPointsToUser(userId, pointsToBeAdded) async {
+    UserSchema user = await getUserById(userId);
+    final userById = Uri.parse(usersString + '/' + userId.toString());
+
+    user.points += pointsToBeAdded;
+    var response =
+        await http.patch(userById, body: {"points": user.points.toString()});
+    print(response);
   }
 }

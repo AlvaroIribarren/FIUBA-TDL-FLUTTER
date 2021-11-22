@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_auth/Screens/Leaderboard/leaderboard_screen.dart';
 import 'package:flutter_auth/Screens/Welcome/components/body.dart';
 
 class WelcomeScreen extends StatefulWidget {

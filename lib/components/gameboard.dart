@@ -10,10 +10,6 @@ import 'package:provider/provider.dart';
 class GameBoard extends StatelessWidget {
   const GameBoard({Key key}) : super(key: key);
 
-  Object getUserData() {
-    return {'id': 1, 'email': 'asd@asd'};
-  }
-
   @override
   Widget build(BuildContext context) {
     return Consumer<GameProvider>(
