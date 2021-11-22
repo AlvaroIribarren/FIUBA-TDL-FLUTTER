@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/api/UserSchema.dart';
-import 'package:flutter_auth/api/api.dart';
+import 'package:truco_argentino_hardcoders/api/UserSchema.dart';
+import 'package:truco_argentino_hardcoders/api/api.dart';
 
 class UsersList extends StatefulWidget {
   List<UserSchema> users;

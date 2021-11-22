@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_auth/api/UserSchema.dart';
-import 'package:flutter_auth/api/api.dart';
-import 'package:flutter_auth/components/users_list.dart';
+import 'package:truco_argentino_hardcoders/api/UserSchema.dart';
+import 'package:truco_argentino_hardcoders/api/api.dart';
+import 'package:truco_argentino_hardcoders/components/users_list.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class Leaderboard extends StatefulWidget {
