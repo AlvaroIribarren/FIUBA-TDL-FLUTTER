@@ -1,5 +1,10 @@
+import 'dart:ffi';
+
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:truco_argentino_hardcoders/api/UserSchema.dart';
+import 'package:truco_argentino_hardcoders/api/api.dart';
+import 'package:truco_argentino_hardcoders/Screens/Leaderboard/leaderboard_screen.dart';
 import 'package:truco_argentino_hardcoders/api/UserSchema.dart';
 import 'package:truco_argentino_hardcoders/api/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
@@ -35,10 +40,24 @@ class _UserDataState extends State<UserData> {
           if (snapshot.data == null) {
             return Container(child: Center(child: Text('Cargando...')));
           } else {
-            return Container(
-              child: Text(
+            return Scaffold(
+              body: Text(
                 "Hola, ${snapshot.data.email} presiona el boton superior \n para comenzar un nuevo juego",
                 textAlign: TextAlign.center,
+              ),
+              floatingActionButton: FloatingActionButton(
+                onPressed: () {
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return Leaderboard();
+                      },
+                    ),
+                  );
+                },
+                child: const Icon(Icons.leaderboard),
+                backgroundColor: Colors.green,
               ),
             );
           }

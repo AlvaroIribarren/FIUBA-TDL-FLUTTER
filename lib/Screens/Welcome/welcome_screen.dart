@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:truco_argentino_hardcoders/Screens/Welcome/components/body.dart';
+import 'package:truco_argentino_hardcoders/Screens/Leaderboard/leaderboard_screen.dart';
+import 'package:truco_argentino_hardcoders/Screens/Welcome/components/body.dart';
 
 class WelcomeScreen extends StatefulWidget {
   @override
