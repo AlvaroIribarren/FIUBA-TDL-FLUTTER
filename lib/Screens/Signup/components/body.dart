@@ -1,14 +1,14 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/Login/login_screen.dart';
-import 'package:flutter_auth/Screens/Signup/components/background.dart';
-import 'package:flutter_auth/Screens/main_screen.dart';
-import 'package:flutter_auth/api/UserSchema.dart';
-import 'package:flutter_auth/api/api.dart';
-import 'package:flutter_auth/components/already_have_an_account_acheck.dart';
-import 'package:flutter_auth/components/error_dialog.dart';
-import 'package:flutter_auth/components/rounded_button.dart';
-import 'package:flutter_auth/components/rounded_input_field.dart';
-import 'package:flutter_auth/components/rounded_password_field.dart';
+import 'package:truco_argentino_hardcoders/Screens/Login/login_screen.dart';
+import 'package:truco_argentino_hardcoders/Screens/Signup/components/background.dart';
+import 'package:truco_argentino_hardcoders/Screens/main_screen.dart';
+import 'package:truco_argentino_hardcoders/api/UserSchema.dart';
+import 'package:truco_argentino_hardcoders/api/api.dart';
+import 'package:truco_argentino_hardcoders/components/already_have_an_account_acheck.dart';
+import 'package:truco_argentino_hardcoders/components/error_dialog.dart';
+import 'package:truco_argentino_hardcoders/components/rounded_button.dart';
+import 'package:truco_argentino_hardcoders/components/rounded_input_field.dart';
+import 'package:truco_argentino_hardcoders/components/rounded_password_field.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -48,7 +48,7 @@ class Body extends StatelessWidget {
             ),
             RoundedButton(
               color: Colors.green.shade300,
-              text: "SIGNUP",
+              text: "REGISTRARSE",
               press: () async {
                 UserSchema response = await api.postNewUser(email, pass);
                 if (response.id != 0) {

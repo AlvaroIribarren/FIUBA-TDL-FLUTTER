@@ -1,11 +1,11 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/components/card_back.dart';
-import 'package:flutter_auth/components/discarded_cards.dart';
-import 'package:flutter_auth/components/playing_card.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/models/card_model.dart';
-import 'package:flutter_auth/models/hand_model.dart';
-import 'package:flutter_auth/models/player_model.dart';
+import 'package:truco_argentino_hardcoders/components/card_back.dart';
+import 'package:truco_argentino_hardcoders/components/discarded_cards.dart';
+import 'package:truco_argentino_hardcoders/components/playing_card.dart';
+import 'package:truco_argentino_hardcoders/constants.dart';
+import 'package:truco_argentino_hardcoders/models/card_model.dart';
+import 'package:truco_argentino_hardcoders/models/hand_model.dart';
+import 'package:truco_argentino_hardcoders/models/player_model.dart';
 
 class PlayersHandContainer extends StatelessWidget {
   final Widget child;

@@ -1,7 +1,7 @@
 import 'dart:convert';
 
-import 'package:flutter_auth/api/LoginResponse.dart';
-import 'package:flutter_auth/api/UserSchema.dart';
+import 'package:truco_argentino_hardcoders/api/LoginResponse.dart';
+import 'package:truco_argentino_hardcoders/api/UserSchema.dart';
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 

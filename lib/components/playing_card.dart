@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/components/rounded_button.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/models/card_model.dart';
+import 'package:truco_argentino_hardcoders/components/rounded_button.dart';
+import 'package:truco_argentino_hardcoders/constants.dart';
+import 'package:truco_argentino_hardcoders/models/card_model.dart';
 
 import 'card_back.dart';
 
@@ -33,9 +33,7 @@ class PlayingCard extends StatelessWidget {
           borderRadius: BorderRadius.circular(4.8),
         ),
         clipBehavior: Clip.antiAlias,
-        child: visible
-            ? Image.asset(card.image)
-            : CardBack(),
+        child: visible ? Image.asset(card.image) : CardBack(),
       ),
     );
   }

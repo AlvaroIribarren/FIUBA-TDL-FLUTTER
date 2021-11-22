@@ -1,4 +1,4 @@
-import 'package:flutter_auth/models/hand_model.dart';
+import 'package:truco_argentino_hardcoders/models/hand_model.dart';
 
 import 'card_model.dart';
 

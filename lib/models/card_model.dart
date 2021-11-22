@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/components/card_back.dart';
-import 'package:flutter_auth/components/rounded_button.dart';
+import 'package:truco_argentino_hardcoders/components/card_back.dart';
+import 'package:truco_argentino_hardcoders/components/rounded_button.dart';
 
 import '../constants.dart';
 

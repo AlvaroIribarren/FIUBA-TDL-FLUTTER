@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/components/gameboard.dart';
-import 'package:flutter_auth/models/player_model.dart';
-import 'package:flutter_auth/services/game_provider.dart';
+import 'package:truco_argentino_hardcoders/components/gameboard.dart';
+import 'package:truco_argentino_hardcoders/models/player_model.dart';
+import 'package:truco_argentino_hardcoders/services/game_provider.dart';
 import 'package:provider/provider.dart';
 
 class GameScreen extends StatefulWidget {
@@ -24,7 +24,7 @@ class _GameScreenState extends State<GameScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: const Text("Truco Game"),
+        title: const Text("Truco"),
         actions: [
           TextButton(
             onPressed: () {
@@ -35,7 +35,7 @@ class _GameScreenState extends State<GameScreen> {
               _gameProvider.newGame(players);
             },
             child: Text(
-              "New Game",
+              "Nuevo Juego",
               style: TextStyle(color: Colors.white),
             ),
           )

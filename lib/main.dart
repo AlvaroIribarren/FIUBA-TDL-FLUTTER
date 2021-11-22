@@ -1,9 +1,9 @@
 //import 'dart:html';
 
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/Welcome/welcome_screen.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/services/game_provider.dart';
+import 'package:truco_argentino_hardcoders/Screens/Welcome/welcome_screen.dart';
+import 'package:truco_argentino_hardcoders/constants.dart';
+import 'package:truco_argentino_hardcoders/services/game_provider.dart';
 import 'package:provider/provider.dart';
 
 void main() async {
@@ -18,7 +18,7 @@ class MyApp extends StatelessWidget {
   Widget build(BuildContext context) {
     return MaterialApp(
       debugShowCheckedModeBanner: false,
-      title: 'Flutter Auth',
+      title: 'Truco Argentino',
       theme: ThemeData(
         primaryColor: kPrimaryColor,
         scaffoldBackgroundColor: Colors.white,

@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/api/UserSchema.dart';
-import 'package:flutter_auth/api/api.dart';
+import 'package:truco_argentino_hardcoders/api/UserSchema.dart';
+import 'package:truco_argentino_hardcoders/api/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
 
 class UserData extends StatefulWidget {
@@ -33,7 +33,7 @@ class _UserDataState extends State<UserData> {
         future: fetchData(),
         builder: (context, snapshot) {
           if (snapshot.data == null) {
-            return Container(child: Center(child: Text('Loading')));
+            return Container(child: Center(child: Text('Cargando...')));
           } else {
             return Container(
               child: Text(

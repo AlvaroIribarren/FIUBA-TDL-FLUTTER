@@ -1,6 +1,6 @@
 import 'package:flutter/widgets.dart';
-import 'package:flutter_auth/models/player_model.dart';
-import 'package:flutter_auth/services/game_provider.dart';
+import 'package:truco_argentino_hardcoders/models/player_model.dart';
+import 'package:truco_argentino_hardcoders/services/game_provider.dart';
 
 abstract class TurnAction extends StatelessWidget {
   final PlayerModel playerOwner;

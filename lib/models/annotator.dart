@@ -1,16 +1,20 @@
-import 'package:flutter_auth/models/player_model.dart';
+import 'package:truco_argentino_hardcoders/models/player_model.dart';
 
 class Annotator {
   int roundPointsPlayer;
   int roundPointsBot;
   int turnPointsPlayer;
   int turnPointsBot;
+  String playerHumanName;
+  String playerBotName;
 
   Annotator({
     this.roundPointsPlayer = 0,
     this.roundPointsBot = 0,
     this.turnPointsPlayer = 0,
     this.turnPointsBot = 0,
+    this.playerHumanName,
+    this.playerBotName,
   });
 
   addPointsPerTurn(PlayerModel player, int points) {

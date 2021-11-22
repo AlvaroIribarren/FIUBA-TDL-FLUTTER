@@ -1,8 +1,8 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/components/playing_card.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_auth/models/card_model.dart';
+import 'package:truco_argentino_hardcoders/components/playing_card.dart';
+import 'package:truco_argentino_hardcoders/constants.dart';
+import 'package:truco_argentino_hardcoders/models/card_model.dart';
 
 class CardPlayed extends StatelessWidget {
   final List<CardModel> cards;

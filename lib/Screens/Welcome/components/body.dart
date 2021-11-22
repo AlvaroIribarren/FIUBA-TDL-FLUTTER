@@ -1,10 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_auth/Screens/Login/login_screen.dart';
-import 'package:flutter_auth/Screens/Signup/signup_screen.dart';
-import 'package:flutter_auth/Screens/Welcome/components/background.dart';
-import 'package:flutter_auth/components/rounded_button.dart';
-import 'package:flutter_auth/constants.dart';
-import 'package:flutter_svg/svg.dart';
+import 'package:truco_argentino_hardcoders/Screens/Login/login_screen.dart';
+import 'package:truco_argentino_hardcoders/Screens/Signup/signup_screen.dart';
+import 'package:truco_argentino_hardcoders/Screens/Welcome/components/background.dart';
+import 'package:truco_argentino_hardcoders/components/rounded_button.dart';
 
 class Body extends StatelessWidget {
   @override
@@ -17,7 +15,7 @@ class Body extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: <Widget>[
             Text(
-              "Truco Online",
+              "Truco Argentino",
               style: TextStyle(
                   color: Colors.blue.shade900,
                   fontSize: 30,
@@ -30,7 +28,7 @@ class Body extends StatelessWidget {
             ),
             SizedBox(height: size.height * 0.05),
             RoundedButton(
-              text: "LOGIN",
+              text: "INICIAR SESION",
               color: Colors.blue,
               press: () {
                 Navigator.push(
@@ -44,7 +42,7 @@ class Body extends StatelessWidget {
               },
             ),
             RoundedButton(
-              text: "SIGN UP",
+              text: "REGISTRARSE",
               color: Colors.green,
               textColor: Colors.white,
               press: () {
