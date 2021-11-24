@@ -124,7 +124,7 @@ class GameProvider with ChangeNotifier {
     return _turn.getTurnActions(this);
   }
 
-  void endTurn() {
+  Future<void> endTurn() {
     notifyListeners();
 
     print("fin de turno/jugada");
@@ -198,12 +198,14 @@ class GameProvider with ChangeNotifier {
     endTurn();
   }
 
-  void endRound() {
-    print("player round points: ${annotator.roundPointsPlayer}");
-    print("bot round points: ${annotator.roundPointsBot}");
-
-    setupBoard(players);
-    annotator.newRound();
-    notifyListeners();
+  Future<void> endRound() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    if (!annotator.endGame()) {
+      setupBoard(players);
+      annotator.newRound();
+      notifyListeners();
+    } else {
+      print("${annotator.getWinnersName} Gana la partida!");
+    }
   }
 }

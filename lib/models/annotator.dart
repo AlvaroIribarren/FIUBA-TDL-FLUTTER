@@ -7,6 +7,7 @@ class Annotator {
   int turnPointsBot;
   String playerHumanName;
   String playerBotName;
+  String winnersName;
 
   Annotator({
     this.roundPointsPlayer = 0,
@@ -15,6 +16,7 @@ class Annotator {
     this.turnPointsBot = 0,
     this.playerHumanName,
     this.playerBotName,
+    this.winnersName,
   });
 
   addPointsPerTurn(PlayerModel player, int points) {
@@ -41,4 +43,19 @@ class Annotator {
     }
     return false;
   }
+
+  bool endGame() {
+    //TODO: Cabmiar a 15 para jugar
+    if (roundPointsBot == 2) {
+      winnersName = playerBotName;
+      return true;
+    }
+    if (roundPointsPlayer == 2) {
+      winnersName = playerHumanName;
+      return true;
+    }
+    return false;
+  }
+
+  String get getWinnersName => winnersName;
 }
