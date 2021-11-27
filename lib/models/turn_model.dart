@@ -77,6 +77,7 @@ class Turn {
     var cardOther =
         otherPlayer.currentHand.cardPlayedInTurn(turnNumber.toInt());
 
+    // TODO: arreglar empate/parda
     if (cardCurr > cardOther) {
       return otherPlayer;
     } else {

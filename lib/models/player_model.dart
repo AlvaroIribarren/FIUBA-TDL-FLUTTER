@@ -5,29 +5,14 @@ import 'card_model.dart';
 class PlayerModel {
   final String name;
   final bool isHuman;
-  // List<CardModel> cards;
-  // List<CardModel> discards = [];
   HandModel currentHand;
   bool cantoEnvido = false;
 
   PlayerModel({
     this.name,
-    // this.cards = const [],
     this.isHuman = false,
     this.currentHand,
   });
-
-  // addCards(List<CardModel> newCards) {
-  //   cards = [...cards, ...newCards];
-  // }
-
-  // removeCard(CardModel card) {
-  //   cards.removeWhere((c) => c.value == card.value);
-  // }
-
-  // addDiscards(CardModel newCards) {
-  //   discards.add(newCards);
-  // }
 
   assignNewHand(HandModel hand) {
     this.currentHand = hand;
@@ -43,6 +28,10 @@ class PlayerModel {
 
   cantarEnvido() {
     cantoEnvido = true;
+  }
+
+  resetEnvido() {
+    cantoEnvido = false;
   }
 
   // setEnvido(bool envido) {

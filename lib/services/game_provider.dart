@@ -69,7 +69,11 @@ class GameProvider with ChangeNotifier {
     var hand2 = HandModel(cards: hands[1]);
     players[0].assignNewHand(hand1);
     players[1].assignNewHand(hand2);
+
     _turn = Turn(players: players, currentPlayer: players.first);
+
+    players[0].resetEnvido();
+    players[1].resetEnvido();
   }
 
   // bool canPlayCard(CardModel card) {
@@ -82,21 +86,20 @@ class GameProvider with ChangeNotifier {
 
   cantarEnvido(PlayerModel player) {
     _turn.cantarEnvido(player);
-
     _turn.swapCurrentPlayer();
-
     if (_turn.currentPlayer.isBot) {
       botActionResponse();
     }
-
     notifyListeners();
   }
 
   rechazarEnvido(PlayerModel player) {
+    _turn.cantarEnvido(player);
     annotator.addRoundPointsToOtherPlayer(player, 1);
-
     _turn.swapCurrentPlayer();
-
+    if (_turn.currentPlayer.isBot) {
+      botPlayCard();
+    }
     notifyListeners();
   }
 
@@ -178,7 +181,7 @@ class GameProvider with ChangeNotifier {
     List<TurnAction> possibleActions = _getTurnActions();
     print("% Bot debe responder. Opciones: $possibleActions");
 
-    // TODO: tomar decision ...
+    // TODO: tomar decision logica...
     possibleActions[1].executeAction();
   }
 
@@ -204,8 +207,17 @@ class GameProvider with ChangeNotifier {
     //   return null;
     // }
 
-    var card = getRandomElement(players[1].currentHand.cards);
+    // TODO: cambiar por random, NO por length != 0
+    if (possibleActions.length != 0) {
+      possibleActions[0].executeAction();
+    } else {
+      botPlayCard();
+    }
+  }
 
+  Future<void> botPlayCard() async {
+    await Future.delayed(const Duration(milliseconds: 500));
+    var card = getRandomElement(players[1].currentHand.cards);
     playCard(player: players[1], card: card);
   }
 
