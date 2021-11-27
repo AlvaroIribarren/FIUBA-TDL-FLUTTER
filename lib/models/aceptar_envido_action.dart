@@ -24,7 +24,6 @@ class AceptarEnvidoAction extends TurnAction {
   @override
   executeAction() {
     print("ACEPTAR ENVIDO!");
-    // this.model.cantarEnvido(this.playerOwner);
-    // <otro jugador acepta o no>
+    this.model.aceptarEnvido(this.playerOwner);
   }
 }

@@ -35,6 +35,14 @@ class Annotator {
     }
   }
 
+  addRoundPoints(PlayerModel player, int points) {
+    if (player.isHuman) {
+      roundPointsPlayer += points;
+    } else {
+      roundPointsBot += points;
+    }
+  }
+
   newRound() {
     turnPointsBot = 0;
     turnPointsPlayer = 0;

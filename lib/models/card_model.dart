@@ -21,10 +21,6 @@ class CardModel extends StatelessWidget {
   final Widget child;
   final bool visible;
 
-  String get Value => value;
-  // String get Suit => suit;
-  int get EnvidoValue => envidoValue;
-
   const CardModel({
     Key key,
     this.child,

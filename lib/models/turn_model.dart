@@ -97,4 +97,13 @@ class Turn {
   asignarJugadorActual(PlayerModel player) {
     currentPlayer = player;
   }
+
+  PlayerModel findWinnerEnvidoPlayer() {
+    bool currentWins =
+        currentPlayer.currentHand.winsEnvido(otherPlayer.currentHand);
+
+    if (currentWins) return currentPlayer;
+
+    return otherPlayer;
+  }
 }

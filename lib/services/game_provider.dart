@@ -103,17 +103,24 @@ class GameProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  // void envido(PlayerModel player) {
-  //   print("Envido gato!");
-  //   // player.setEnvido(false);
-  //   _envido = true;
-  //   endTurn();
-  // }
+  aceptarEnvido(PlayerModel player) {
+    _turn.cantarEnvido(player);
+
+    PlayerModel winner = _turn.findWinnerEnvidoPlayer();
+    annotator.addRoundPoints(winner, 2);
+
+    _turn.swapCurrentPlayer();
+    if (_turn.currentPlayer.isBot) {
+      botPlayCard();
+    }
+    notifyListeners();
+  }
 
   Future<void> playCard({
     PlayerModel player,
     CardModel card,
   }) async {
+    // TODO: agregar chequeo extra para que no pueda jugar si le cantaron envido
     if (player != _turn.currentPlayer) return;
     print("*** JUEGA ${player.name}");
     player.discardCard(card);
@@ -121,11 +128,6 @@ class GameProvider with ChangeNotifier {
     endTurn();
     // endPlay();
   }
-
-  // bool get canEndTurn {
-  //   return true;
-  //   //Si no jugó una carta, no podría pasar el turno
-  // }
 
   List<TurnAction> _getTurnActions() {
     return _turn.getTurnActions(this);
@@ -190,22 +192,6 @@ class GameProvider with ChangeNotifier {
 
     List<TurnAction> possibleActions = _getTurnActions();
     print(possibleActions);
-
-    // List<int> envido1 = [];
-    // if (_envido) {
-    //   for (var i = 0; i < players[1].cards.length - 1; i++) {
-    //     for (var j = 1; j < players[1].cards.length; j++) {
-    //       if (players[1].cards[i].Suit == players[1].cards[j].Suit && i != j) {
-    //         envido1.add(players[1].cards[i].EnvidoValue +
-    //             players[1].cards[j].EnvidoValue);
-    //       }
-    //     }
-    //   }
-    //   print(envido1.reduce(max));
-    //   _envido = false;
-    //   endTurn();
-    //   return null;
-    // }
 
     // TODO: cambiar por random, NO por length != 0
     if (possibleActions.length != 0) {

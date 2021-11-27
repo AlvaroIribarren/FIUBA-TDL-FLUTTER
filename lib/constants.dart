@@ -78,7 +78,7 @@ var card8 = CardModel(
   image: "assets/images/c8.png",
   value: "10 COPA",
   suit: "COPA",
-  envidoValue: 20,
+  envidoValue: 0,
   visible: true,
   order: getOrder(10, Suit.Cups),
 );
@@ -86,7 +86,7 @@ var card9 = CardModel(
   image: "assets/images/c9.png",
   value: "11 COPA",
   suit: "COPA",
-  envidoValue: 20,
+  envidoValue: 0,
   visible: true,
   order: getOrder(11, Suit.Cups),
 );
@@ -94,7 +94,7 @@ var card10 = CardModel(
   image: "assets/images/c10.png",
   value: "12 COPA",
   suit: "COPA",
-  envidoValue: 20,
+  envidoValue: 0,
   visible: true,
   order: getOrder(12, Suit.Cups),
 );
@@ -158,7 +158,7 @@ var gold8 = CardModel(
   image: "assets/images/o8.png",
   value: "10 ORO",
   suit: "ORO",
-  envidoValue: 20,
+  envidoValue: 0,
   visible: true,
   order: getOrder(10, Suit.Golds),
 );
@@ -166,7 +166,7 @@ var gold9 = CardModel(
   image: "assets/images/o9.png",
   value: "11 ORO",
   suit: "ORO",
-  envidoValue: 20,
+  envidoValue: 0,
   visible: true,
   order: getOrder(11, Suit.Golds),
 );
@@ -174,7 +174,7 @@ var gold10 = CardModel(
   image: "assets/images/o10.png",
   value: "12 ORO",
   suit: "ORO",
-  envidoValue: 20,
+  envidoValue: 0,
   visible: true,
   order: getOrder(12, Suit.Golds),
 );
@@ -238,7 +238,7 @@ var sword8 = CardModel(
   image: "assets/images/e8.png",
   value: "10 ESPADA",
   suit: "ESPADA",
-  envidoValue: 20,
+  envidoValue: 0,
   visible: true,
   order: getOrder(10, Suit.Swords),
 );
@@ -246,7 +246,7 @@ var sword9 = CardModel(
   image: "assets/images/e9.png",
   value: "11 ESPADA",
   suit: "ESPADA",
-  envidoValue: 20,
+  envidoValue: 0,
   visible: true,
   order: getOrder(11, Suit.Swords),
 );
@@ -254,7 +254,7 @@ var sword10 = CardModel(
   image: "assets/images/e10.png",
   value: "12 ESPADA",
   suit: "ESPADA",
-  envidoValue: 20,
+  envidoValue: 0,
   visible: true,
   order: getOrder(12, Suit.Swords),
 );
@@ -318,7 +318,7 @@ var club8 = CardModel(
   image: "assets/images/b8.png",
   value: "10 BASTO",
   suit: "BASTO",
-  envidoValue: 20,
+  envidoValue: 0,
   visible: true,
   order: getOrder(10, Suit.Clubs),
 );
@@ -326,7 +326,7 @@ var club9 = CardModel(
   image: "assets/images/b9.png",
   value: "11 BASTO",
   suit: "BASTO",
-  envidoValue: 20,
+  envidoValue: 0,
   visible: true,
   order: getOrder(11, Suit.Clubs),
 );
@@ -334,7 +334,7 @@ var club10 = CardModel(
   image: "assets/images/b10.png",
   value: "12 BASTO",
   suit: "BASTO",
-  envidoValue: 20,
+  envidoValue: 0,
   visible: true,
   order: getOrder(12, Suit.Clubs),
 );
