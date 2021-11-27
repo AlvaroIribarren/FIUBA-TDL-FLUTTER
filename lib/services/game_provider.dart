@@ -15,7 +15,7 @@ class GameProvider with ChangeNotifier {
     _service = DeckModel();
   }*/
 
-  bool _envido;
+  // bool _envido;
 
   Annotator annotator;
 
@@ -27,10 +27,7 @@ class GameProvider with ChangeNotifier {
 
   List<CardModel> cards;
 
-  // List<CardModel> _discards = [];
-  // List<CardModel> get discards => _discards;
-
-  // Map<String, dynamic> gameState = {};
+  int roundNumber = 0;
 
   void newGame(List<PlayerModel> players) {
     print("Creating a new game");
@@ -72,79 +69,67 @@ class GameProvider with ChangeNotifier {
     players[0].assignNewHand(hand1);
     players[1].assignNewHand(hand2);
     _turn = Turn(players: players, currentPlayer: players.first);
-    // players[0].setEnvido(true);
-    // players[1].setEnvido(true);
-    _envido = false;
-    // _discards = [];
   }
 
-  bool canPlayCard(CardModel card) {
-    return true;
-  }
+  // bool canPlayCard(CardModel card) {
+  //   return true;
+  // }
 
-  bool canEnvido(PlayerModel player) {
-    // return player.getEnvido;
-  }
+  // bool canEnvido(PlayerModel player) {
+  //   // return player.getEnvido;
+  // }
 
   cantarEnvido(PlayerModel player) {
-    _turn.seCantoEnvido(player);
+    _turn.cantarEnvido(player);
   }
 
-  void envido(PlayerModel player) {
-    print("Envido gato!");
-    // player.setEnvido(false);
-    _envido = true;
-    endTurn();
-  }
+  // void envido(PlayerModel player) {
+  //   print("Envido gato!");
+  //   // player.setEnvido(false);
+  //   _envido = true;
+  //   endTurn();
+  // }
 
   Future<void> playCard({
     PlayerModel player,
     CardModel card,
   }) async {
     if (player != _turn.currentPlayer) return;
-
+    print("*** JUEGA ${player.name}");
     player.discardCard(card);
-
-    // _discards.add(card);
-
     _turn.playsCount += 1;
-
-    // player.setEnvido(false);
-
     endTurn();
     // endPlay();
   }
 
-  bool get canEndTurn {
-    return true;
-    //Si no jugó una carta, no podría pasar el turno
-  }
+  // bool get canEndTurn {
+  //   return true;
+  //   //Si no jugó una carta, no podría pasar el turno
+  // }
 
   List<TurnAction> getTurnActions() {
     return _turn.getTurnActions(this);
   }
 
-  Future<void> endTurn() {
+  Future<void> endTurn() async {
     notifyListeners();
 
-    print("fin de turno/jugada");
+    // print("fin de turno/jugada");
     if (_turn.reachedEndOfTurn()) {
-      print("final de turno. currplayer: ${_turn.currentPlayer.name}");
+      // print("final de turno. currplayer: ${_turn.currentPlayer.name}");
       var perdedor = _turn.getLoserPlayer();
       _turn.asignarJugadorActual(perdedor);
       annotator.addPointsPerTurn(_turn.otherPlayer, 1);
-      print(
-          "final de turno, cambio actual. currplayer: ${_turn.currentPlayer.name}");
     }
 
     print("player points: ${annotator.turnPointsPlayer}");
     print("bot points: ${annotator.turnPointsBot}");
 
     if (annotator.endRound()) {
-      return endRound();
+      await endRound();
+    } else {
+      _turn.nextTurn();
     }
-
-    _turn.nextTurn();
 
     print("ahora va a jugar currplayer: ${_turn.currentPlayer.name}");
 
@@ -167,7 +152,7 @@ class GameProvider with ChangeNotifier {
     List<TurnAction> possibleActions = getTurnActions();
     print(possibleActions);
 
-    List<int> envido1 = [];
+    // List<int> envido1 = [];
     // if (_envido) {
     //   for (var i = 0; i < players[1].cards.length - 1; i++) {
     //     for (var j = 1; j < players[1].cards.length; j++) {
@@ -185,27 +170,27 @@ class GameProvider with ChangeNotifier {
 
     var card = getRandomElement(players[1].currentHand.cards);
 
-    players[1].discardCard(card);
-
-    // _discards.add(card);
-
-    _turn.playsCount += 1;
-
-    // players[1].setEnvido(false);
-
-    await Future.delayed(const Duration(milliseconds: 500));
-
-    endTurn();
+    playCard(player: players[1], card: card);
   }
 
   Future<void> endRound() async {
     await Future.delayed(const Duration(milliseconds: 500));
     if (!annotator.endGame()) {
+      // siguiente ronda
       setupBoard(players);
+      roundNumber += 1;
+      _turn.swapPlayerForFirstTurn(
+          roundNumber); // para que ahora arranque el otro
       annotator.newRound();
+      print("============== TERMINO RONDA");
       notifyListeners();
     } else {
       print("${annotator.getWinnersName} Gana la partida!");
     }
+  }
+
+  // TODO: BORRAR
+  String getCurrentPlayer() {
+    return _turn.currentPlayer.name;
   }
 }

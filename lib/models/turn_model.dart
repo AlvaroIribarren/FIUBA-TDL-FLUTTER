@@ -24,7 +24,7 @@ class Turn {
   void nextTurn() {
     turnNumber += 0.5; // deberia ser +1/2
     // index += 1;
-    currentPlayer = otherPlayer;
+    asignarJugadorActual(otherPlayer);
     // playsCount += 1;
   }
 
@@ -32,7 +32,7 @@ class Turn {
     return players.firstWhere((p) => p != currentPlayer);
   }
 
-  seCantoEnvido(PlayerModel player) {
+  cantarEnvido(PlayerModel player) {
     player.cantarEnvido();
     // var idx = players.indexOf(player);
     // _cantoEnvido[idx] = true;
@@ -45,13 +45,13 @@ class Turn {
   List<TurnAction> getTurnActions(GameProvider model) {
     if (!currentPlayer.cantoEnvido &&
         !otherPlayer.cantoEnvido &&
-        turnNumber == 0) {
+        turnNumber < 1) {
       return [
         CantarEnvidoAction(model: model, playerOwner: this.currentPlayer)
       ];
     } else if (!currentPlayer.cantoEnvido &&
-        this.otherPlayer.cantoEnvido &&
-        turnNumber == 0) {
+        otherPlayer.cantoEnvido &&
+        turnNumber < 1) {
       return [
         AceptarEnvidoAction(
           model: model,
@@ -84,6 +84,11 @@ class Turn {
     } else {
       return currentPlayer;
     }
+  }
+
+  swapPlayerForFirstTurn(int currentRoundNumber) {
+    print("-- Resultado de swap: ${currentRoundNumber % 2}");
+    currentPlayer = players[currentRoundNumber % 2];
   }
 
   asignarJugadorActual(PlayerModel player) {

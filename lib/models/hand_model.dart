@@ -1,13 +1,13 @@
 import 'card_model.dart';
 
 class HandModel {
-  final int roundNumber;
+  // final int roundNumber;
   List<CardModel> cards;
   List<CardModel> discards = [];
   // bool envido;
 
   HandModel({
-    this.roundNumber,
+    // this.roundNumber,
     this.cards,
   });
 

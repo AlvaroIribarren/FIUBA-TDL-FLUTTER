@@ -30,7 +30,7 @@ class _GameScreenState extends State<GameScreen> {
             onPressed: () {
               final players = [
                 PlayerModel(name: "Fackz", isHuman: true),
-                PlayerModel(name: "Franco", isHuman: false),
+                PlayerModel(name: "Trucoide", isHuman: false),
               ];
               _gameProvider.newGame(players);
             },
