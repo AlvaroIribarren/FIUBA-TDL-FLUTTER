@@ -124,8 +124,16 @@ class GameProvider with ChangeNotifier {
   //   //Si no jugó una carta, no podría pasar el turno
   // }
 
-  List<TurnAction> getTurnActions() {
+  List<TurnAction> _getTurnActions() {
     return _turn.getTurnActions(this);
+  }
+
+  List<TurnAction> getUITurnActions() {
+    if (_turn.currentPlayer.isHuman) {
+      return _turn.getTurnActions(this);
+    }
+
+    return [];
   }
 
   Future<void> endTurn() async {
@@ -167,7 +175,7 @@ class GameProvider with ChangeNotifier {
     assert(_turn.currentPlayer == players[1]);
 
     await Future.delayed(const Duration(milliseconds: 500));
-    List<TurnAction> possibleActions = getTurnActions();
+    List<TurnAction> possibleActions = _getTurnActions();
     print("% Bot debe responder. Opciones: $possibleActions");
 
     // TODO: tomar decision ...
@@ -177,7 +185,7 @@ class GameProvider with ChangeNotifier {
   Future<void> botTurn() async {
     await Future.delayed(const Duration(milliseconds: 500));
 
-    List<TurnAction> possibleActions = getTurnActions();
+    List<TurnAction> possibleActions = _getTurnActions();
     print(possibleActions);
 
     // List<int> envido1 = [];

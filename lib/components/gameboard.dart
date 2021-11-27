@@ -35,7 +35,7 @@ class GameBoard extends StatelessWidget {
                         onPlayCard: (CardModel card) {
                           model.playCard(player: model.players[0], card: card);
                         }),
-                    TurnActionsContainer(actions: model.getTurnActions()),
+                    TurnActionsContainer(actions: model.getUITurnActions()),
                     AnnotatorWidget(annotator: model.annotator),
                     // ignore: sdk_version_ui_as_code,
                     if (model.annotator.endGame())
