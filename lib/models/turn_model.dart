@@ -24,7 +24,7 @@ class Turn {
   void nextTurn() {
     turnNumber += 0.5; // deberia ser +1/2
     // index += 1;
-    asignarJugadorActual(otherPlayer);
+    swapCurrentPlayer();
     // playsCount += 1;
   }
 
@@ -34,8 +34,6 @@ class Turn {
 
   cantarEnvido(PlayerModel player) {
     player.cantarEnvido();
-    // var idx = players.indexOf(player);
-    // _cantoEnvido[idx] = true;
   }
 
   // _yoCanteEnvido() {
@@ -89,6 +87,10 @@ class Turn {
   swapPlayerForFirstTurn(int currentRoundNumber) {
     print("-- Resultado de swap: ${currentRoundNumber % 2}");
     currentPlayer = players[currentRoundNumber % 2];
+  }
+
+  swapCurrentPlayer() {
+    asignarJugadorActual(otherPlayer);
   }
 
   asignarJugadorActual(PlayerModel player) {

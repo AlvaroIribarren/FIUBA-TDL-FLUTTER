@@ -27,6 +27,14 @@ class Annotator {
     }
   }
 
+  addRoundPointsToOtherPlayer(PlayerModel loserPlayer, int points) {
+    if (loserPlayer.isHuman) {
+      roundPointsBot += points;
+    } else {
+      roundPointsPlayer += points;
+    }
+  }
+
   newRound() {
     turnPointsBot = 0;
     turnPointsPlayer = 0;

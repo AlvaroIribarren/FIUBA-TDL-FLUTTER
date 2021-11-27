@@ -30,6 +30,7 @@ class GameProvider with ChangeNotifier {
   int roundNumber = 0;
 
   void newGame(List<PlayerModel> players) {
+    roundNumber = 0;
     print("Creating a new game");
     _players = players;
     _turn = Turn(players: players, currentPlayer: players.first);
@@ -81,6 +82,22 @@ class GameProvider with ChangeNotifier {
 
   cantarEnvido(PlayerModel player) {
     _turn.cantarEnvido(player);
+
+    _turn.swapCurrentPlayer();
+
+    if (_turn.currentPlayer.isBot) {
+      botActionResponse();
+    }
+
+    notifyListeners();
+  }
+
+  rechazarEnvido(PlayerModel player) {
+    annotator.addRoundPointsToOtherPlayer(player, 1);
+
+    _turn.swapCurrentPlayer();
+
+    notifyListeners();
   }
 
   // void envido(PlayerModel player) {
@@ -146,6 +163,17 @@ class GameProvider with ChangeNotifier {
     return cards[i];
   }
 
+  Future<void> botActionResponse() async {
+    assert(_turn.currentPlayer == players[1]);
+
+    await Future.delayed(const Duration(milliseconds: 500));
+    List<TurnAction> possibleActions = getTurnActions();
+    print("% Bot debe responder. Opciones: $possibleActions");
+
+    // TODO: tomar decision ...
+    possibleActions[1].executeAction();
+  }
+
   Future<void> botTurn() async {
     await Future.delayed(const Duration(milliseconds: 500));
 
@@ -179,6 +207,7 @@ class GameProvider with ChangeNotifier {
       // siguiente ronda
       setupBoard(players);
       roundNumber += 1;
+      print("-- Valor de roundNumber: $roundNumber");
       _turn.swapPlayerForFirstTurn(
           roundNumber); // para que ahora arranque el otro
       annotator.newRound();
@@ -190,7 +219,7 @@ class GameProvider with ChangeNotifier {
   }
 
   // TODO: BORRAR
-  String getCurrentPlayer() {
+  String getCurrentPlayerName() {
     return _turn.currentPlayer.name;
   }
 }

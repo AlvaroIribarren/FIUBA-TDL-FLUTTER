@@ -42,7 +42,9 @@ class GameBoard extends StatelessWidget {
                       WinnerBanner(
                         winnersName: model.annotator.getWinnersName,
                       ),
-                    Text(model.getCurrentPlayer()) // TODO: borrar
+                    Text(
+                      "DEBUG - currentPlayer: ${model.getCurrentPlayerName()}",
+                    ) // TODO: borrar
                   ],
                 ),
               )
