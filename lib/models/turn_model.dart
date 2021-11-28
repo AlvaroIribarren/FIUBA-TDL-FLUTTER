@@ -1,5 +1,8 @@
 import 'package:truco_argentino_hardcoders/models/actions/aceptar_envido_action.dart';
+import 'package:truco_argentino_hardcoders/models/actions/aceptar_truco_action.dart';
 import 'package:truco_argentino_hardcoders/models/actions/cantar_envido_action.dart';
+import 'package:truco_argentino_hardcoders/models/actions/cantar_truco_action.dart';
+import 'package:truco_argentino_hardcoders/models/actions/rechazar_truco_action.dart';
 import 'package:truco_argentino_hardcoders/models/player_model.dart';
 import 'package:truco_argentino_hardcoders/models/actions/rechazar_envido_action.dart';
 import 'package:truco_argentino_hardcoders/models/actions/turn_action.dart';
@@ -38,6 +41,12 @@ class Turn {
     players[1].bloquearMano();
   }
 
+  cantarTruco(PlayerModel player) {
+    player.cantarTruco();
+    players[0].bloquearMano();
+    players[1].bloquearMano();
+  }
+
   desbloquearManos() {
     players[0].desbloquearMano();
     players[1].desbloquearMano();
@@ -48,28 +57,12 @@ class Turn {
   // }
 
   List<TurnAction> getTurnActions(GameProvider model) {
-    if (!currentPlayer.cantoEnvido &&
-        !otherPlayer.cantoEnvido &&
-        turnNumber < 1) {
-      return [
-        CantarEnvidoAction(model: model, playerOwner: this.currentPlayer)
-      ];
-    } else if (!currentPlayer.cantoEnvido &&
-        otherPlayer.cantoEnvido &&
-        turnNumber < 1) {
-      return [
-        AceptarEnvidoAction(
-          model: model,
-          playerOwner: currentPlayer,
-        ),
-        RechazarEnvidoAction(
-          model: model,
-          playerOwner: currentPlayer,
-        )
-      ];
-    }
+    List<TurnAction> actions = [];
 
-    return [];
+    if (turnNumber < 1) actions += _getEnvidoActions(model);
+    if (turnNumber >= 1) actions += _getTrucoActions(model);
+
+    return actions;
   }
 
   bool reachedEndOfTurn() {
@@ -92,6 +85,10 @@ class Turn {
     }
   }
 
+  bool huboTruco() {
+    return currentPlayer.cantoTruco && otherPlayer.cantoTruco;
+  }
+
   swapPlayerForFirstTurn(int currentRoundNumber) {
     print("-- Resultado de swap: ${currentRoundNumber % 2}");
     currentPlayer = players[currentRoundNumber % 2];
@@ -112,5 +109,48 @@ class Turn {
     if (currentWins) return currentPlayer;
 
     return otherPlayer;
+  }
+
+  List<TurnAction> _getEnvidoActions(GameProvider model) {
+    if (!currentPlayer.cantoEnvido && !otherPlayer.cantoEnvido) {
+      return [CantarEnvidoAction(model: model, playerOwner: currentPlayer)];
+    } else if (!currentPlayer.cantoEnvido && otherPlayer.cantoEnvido) {
+      return [
+        AceptarEnvidoAction(
+          model: model,
+          playerOwner: currentPlayer,
+        ),
+        RechazarEnvidoAction(
+          model: model,
+          playerOwner: currentPlayer,
+        )
+      ];
+    }
+
+    return [];
+  }
+
+  List<TurnAction> _getTrucoActions(GameProvider model) {
+    if (!currentPlayer.cantoTruco && !otherPlayer.cantoTruco) {
+      return [
+        CantarTrucoAction(
+          model: model,
+          playerOwner: currentPlayer,
+        )
+      ];
+    } else if (!currentPlayer.cantoTruco && otherPlayer.cantoTruco) {
+      return [
+        AceptarTrucoAction(
+          model: model,
+          playerOwner: currentPlayer,
+        ),
+        RechazarTrucoAction(
+          model: model,
+          playerOwner: currentPlayer,
+        ),
+      ];
+    }
+
+    return [];
   }
 }

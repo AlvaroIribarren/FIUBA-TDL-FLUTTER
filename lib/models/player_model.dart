@@ -7,6 +7,7 @@ class PlayerModel {
   final bool isHuman;
   HandModel currentHand;
   bool cantoEnvido = false;
+  bool cantoTruco = false;
 
   PlayerModel({
     this.name,
@@ -42,8 +43,13 @@ class PlayerModel {
     cantoEnvido = true;
   }
 
-  resetEnvido() {
+  resetDesafios() {
     cantoEnvido = false;
+    cantoTruco = false;
+  }
+
+  cantarTruco() {
+    cantoTruco = true;
   }
 
   // setEnvido(bool envido) {

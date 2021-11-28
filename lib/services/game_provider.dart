@@ -71,17 +71,9 @@ class GameProvider with ChangeNotifier {
 
     _turn = Turn(players: players, currentPlayer: players.first);
 
-    players[0].resetEnvido();
-    players[1].resetEnvido();
+    players[0].resetDesafios();
+    players[1].resetDesafios();
   }
-
-  // bool canPlayCard(CardModel card) {
-  //   return true;
-  // }
-
-  // bool canEnvido(PlayerModel player) {
-  //   // return player.getEnvido;
-  // }
 
   cantarEnvido(PlayerModel player) {
     _turn.cantarEnvido(player);
@@ -113,6 +105,42 @@ class GameProvider with ChangeNotifier {
       botPlayCard();
     }
     notifyListeners();
+  }
+
+  cantarTruco(PlayerModel player) {
+    _turn.cantarTruco(player);
+    _turn.swapCurrentPlayer();
+    if (_turn.currentPlayer.isBot) {
+      botActionResponse();
+    }
+    notifyListeners();
+  }
+
+  rechazarTruco(PlayerModel player) {
+    annotator.addRoundPointsToOtherPlayer(player, 1);
+    _turn.swapCurrentPlayer();
+    // reset round
+    endRound();
+    _turn.desbloquearManos();
+    if (_turn.currentPlayer.isBot) {
+      botTurn();
+    }
+    notifyListeners();
+  }
+
+  aceptarTruco(PlayerModel player) {
+    _turn.cantarTruco(player);
+    _turn.swapCurrentPlayer();
+    _turn.desbloquearManos();
+    if (_turn.currentPlayer.isBot) {
+      botPlayCard();
+    }
+    notifyListeners();
+  }
+
+  _sumarPuntosSiHuboTruco() {
+    bool huboTruco = _turn.huboTruco();
+    // TODO: si huboTruco, sumar +2 a quien haya ganado la ronda
   }
 
   Future<void> playCard({
@@ -208,6 +236,7 @@ class GameProvider with ChangeNotifier {
   Future<void> endRound() async {
     await Future.delayed(const Duration(milliseconds: 500));
     if (!annotator.endGame()) {
+      _sumarPuntosSiHuboTruco();
       // siguiente ronda
       setupBoard(players);
       roundNumber += 1;
