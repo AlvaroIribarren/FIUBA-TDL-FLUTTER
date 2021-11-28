@@ -6,8 +6,8 @@ const kPrimaryLightColor = Color(0xFFF1E6FF);
 
 const lightLightBlue = Color(0XFFB3E5FC);
 
-const CARD_WIDTH = 226 / 2;
-const CARD_HEIGHT = 336 / 2;
+const CARD_WIDTH = 208 / 2;
+const CARD_HEIGHT = 319 / 2;
 
 String urlString = "https://truco-server-tdl.herokuapp.com";
 String usersString = urlString + '/users';

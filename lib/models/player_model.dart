@@ -15,11 +15,23 @@ class PlayerModel {
   });
 
   assignNewHand(HandModel hand) {
-    this.currentHand = hand;
+    currentHand = hand;
   }
 
   discardCard(CardModel card) {
-    this.currentHand.discard(card);
+    currentHand.discard(card);
+  }
+
+  bloquearMano() {
+    currentHand.bloquear();
+  }
+
+  desbloquearMano() {
+    currentHand.desbloquear();
+  }
+
+  tieneManoBloqueada() {
+    return currentHand.bloqueada;
   }
 
   bool get isBot {

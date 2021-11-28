@@ -3,23 +3,14 @@ import 'dart:math';
 import 'card_model.dart';
 
 class HandModel {
-  // final int roundNumber;
   List<CardModel> cards;
   List<CardModel> discards = [];
+  bool bloqueada = false;
   // bool envido;
 
   HandModel({
-    // this.roundNumber,
     this.cards,
   });
-
-  // addCards(List<CardModel> newCards) {
-  //   cards = [...cards, ...newCards];
-  // }
-
-  // removeCard(CardModel card) {
-  //   cards.removeWhere((c) => c.value == card.value);
-  // }
 
   discard(CardModel card) {
     cards.removeWhere((c) => c.value == card.value);
@@ -28,6 +19,14 @@ class HandModel {
 
   CardModel cardPlayedInTurn(int turn) {
     return discards[turn];
+  }
+
+  bloquear() {
+    bloqueada = true;
+  }
+
+  desbloquear() {
+    bloqueada = false;
   }
 
   int valorDeEnvido() {

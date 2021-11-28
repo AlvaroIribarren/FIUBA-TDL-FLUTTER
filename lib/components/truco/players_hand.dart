@@ -38,7 +38,7 @@ class PlayersHandContainer extends StatelessWidget {
             ),
           ),
           SizedBox(
-              height: CARD_HEIGHT * size,
+              height: CARD_HEIGHT * size + 10,
               width: double.infinity,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -52,6 +52,7 @@ class PlayersHandContainer extends StatelessWidget {
                       size: size,
                       visible: this.isMainPlayer,
                       onPlayCard: onPlayCard,
+                      blocked: currentHand.bloqueada,
                     ),
                   );
                 },

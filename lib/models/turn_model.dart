@@ -34,6 +34,13 @@ class Turn {
 
   cantarEnvido(PlayerModel player) {
     player.cantarEnvido();
+    players[0].bloquearMano();
+    players[1].bloquearMano();
+  }
+
+  desbloquearManos() {
+    players[0].desbloquearMano();
+    players[1].desbloquearMano();
   }
 
   // _yoCanteEnvido() {

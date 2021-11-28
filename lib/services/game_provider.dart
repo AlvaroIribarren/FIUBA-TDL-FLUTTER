@@ -96,6 +96,7 @@ class GameProvider with ChangeNotifier {
     _turn.cantarEnvido(player);
     annotator.addRoundPointsToOtherPlayer(player, 1);
     _turn.swapCurrentPlayer();
+    _turn.desbloquearManos();
     if (_turn.currentPlayer.isBot) {
       botPlayCard();
     }
@@ -104,11 +105,10 @@ class GameProvider with ChangeNotifier {
 
   aceptarEnvido(PlayerModel player) {
     _turn.cantarEnvido(player);
-
     PlayerModel winner = _turn.findWinnerEnvidoPlayer();
     annotator.addRoundPoints(winner, 2);
-
     _turn.swapCurrentPlayer();
+    _turn.desbloquearManos();
     if (_turn.currentPlayer.isBot) {
       botPlayCard();
     }
@@ -119,8 +119,7 @@ class GameProvider with ChangeNotifier {
     PlayerModel player,
     CardModel card,
   }) async {
-    // TODO: agregar chequeo extra para que no pueda jugar si le cantaron envido
-    if (player != _turn.currentPlayer) return;
+    if (player != _turn.currentPlayer || player.tieneManoBloqueada()) return;
     print("*** JUEGA ${player.name}");
     player.discardCard(card);
     _turn.playsCount += 1;
