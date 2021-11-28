@@ -6,7 +6,7 @@ import 'package:truco_argentino_hardcoders/constants.dart';
 import 'package:truco_argentino_hardcoders/models/card_model.dart';
 import 'package:truco_argentino_hardcoders/models/hand_model.dart';
 import 'package:truco_argentino_hardcoders/models/player_model.dart';
-import 'package:truco_argentino_hardcoders/models/turn_action.dart';
+import 'package:truco_argentino_hardcoders/models/actions/turn_action.dart';
 import 'package:truco_argentino_hardcoders/models/turn_model.dart';
 
 class GameProvider with ChangeNotifier {

@@ -1,13 +1,13 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:truco_argentino_hardcoders/models/turn_action.dart';
+import 'turn_action.dart';
 
-class CantarEnvidoAction extends TurnAction {
+class RechazarEnvidoAction extends TurnAction {
   final model;
   final playerOwner;
 
-  CantarEnvidoAction({
+  RechazarEnvidoAction({
     this.model,
     this.playerOwner,
   }) : super(model: model, playerOwner: playerOwner);
@@ -15,7 +15,7 @@ class CantarEnvidoAction extends TurnAction {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: const Text("Envido!"), onPressed: this.executeAction,
+      child: const Text("Rechazar Envido"), onPressed: this.executeAction,
       // : null,
       // child: const Text("Envido!"),
     );
@@ -23,8 +23,7 @@ class CantarEnvidoAction extends TurnAction {
 
   @override
   executeAction() {
-    print("ENVIDO!");
-    this.model.cantarEnvido(this.playerOwner);
-    // <otro jugador acepta o no>
+    print("RECHAZAR ENVIDO!");
+    this.model.rechazarEnvido(this.playerOwner);
   }
 }

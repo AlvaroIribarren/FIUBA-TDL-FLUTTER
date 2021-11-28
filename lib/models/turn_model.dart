@@ -1,8 +1,8 @@
-import 'package:truco_argentino_hardcoders/models/aceptar_envido_action.dart';
-import 'package:truco_argentino_hardcoders/models/cantar_envido_action.dart';
+import 'package:truco_argentino_hardcoders/models/actions/aceptar_envido_action.dart';
+import 'package:truco_argentino_hardcoders/models/actions/cantar_envido_action.dart';
 import 'package:truco_argentino_hardcoders/models/player_model.dart';
-import 'package:truco_argentino_hardcoders/models/rechazar_envido_action.dart';
-import 'package:truco_argentino_hardcoders/models/turn_action.dart';
+import 'package:truco_argentino_hardcoders/models/actions/rechazar_envido_action.dart';
+import 'package:truco_argentino_hardcoders/models/actions/turn_action.dart';
 import 'package:truco_argentino_hardcoders/services/game_provider.dart';
 
 class Turn {
