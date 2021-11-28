@@ -23,9 +23,20 @@ class TurnActionsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: actions,
+      child: Container(
+        alignment: Alignment.bottomRight,
+        child: Column(
+          children: actions
+              .map(
+                (e) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: e,
+                ),
+              )
+              .toList(),
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+        ),
       ),
     );
   }
