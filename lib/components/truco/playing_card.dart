@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:truco_argentino_hardcoders/components/rounded_button.dart';
 import 'package:truco_argentino_hardcoders/constants.dart';
 import 'package:truco_argentino_hardcoders/models/card_model.dart';
 

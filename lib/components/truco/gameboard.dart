@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/scheduler.dart';
-import 'package:truco_argentino_hardcoders/components/annotator_widget.dart';
-import 'package:truco_argentino_hardcoders/components/players_hand.dart';
-import 'package:truco_argentino_hardcoders/components/turn_actions.dart';
+import 'annotator_widget.dart';
+import 'players_hand.dart';
+import 'turn_actions.dart';
 import 'package:truco_argentino_hardcoders/components/user_data.dart';
-import 'package:truco_argentino_hardcoders/components/winner_banner.dart';
+import 'winner_banner.dart';
 import 'package:truco_argentino_hardcoders/models/card_model.dart';
 import 'package:truco_argentino_hardcoders/services/game_provider.dart';
 import 'package:provider/provider.dart';

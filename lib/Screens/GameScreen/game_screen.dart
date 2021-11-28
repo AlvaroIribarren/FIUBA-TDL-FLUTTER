@@ -1,6 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:truco_argentino_hardcoders/components/gameboard.dart';
+import 'package:truco_argentino_hardcoders/components/truco/gameboard.dart';
 import 'package:truco_argentino_hardcoders/models/player_model.dart';
 import 'package:truco_argentino_hardcoders/services/game_provider.dart';
 import 'package:provider/provider.dart';
