@@ -29,7 +29,7 @@ class _GameScreenState extends State<GameScreen> {
           title: const Text("Truco"),
         ),
         body: Padding(
-          padding: EdgeInsets.all(100),
+          padding: EdgeInsets.all(50),
           child:  Column(
             children: <Widget>[
               InkWell(
