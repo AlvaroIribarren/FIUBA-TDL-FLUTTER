@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:truco_argentino_hardcoders/models/turn_action.dart';
+import 'turn_action.dart';
 
 class AceptarEnvidoAction extends TurnAction {
   final model;
@@ -24,7 +24,6 @@ class AceptarEnvidoAction extends TurnAction {
   @override
   executeAction() {
     print("ACEPTAR ENVIDO!");
-    // this.model.cantarEnvido(this.playerOwner);
-    // <otro jugador acepta o no>
+    this.model.aceptarEnvido(this.playerOwner);
   }
 }

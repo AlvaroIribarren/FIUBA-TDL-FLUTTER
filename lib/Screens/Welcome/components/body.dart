@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:truco_argentino_hardcoders/Screens/Login/login_screen.dart';
 import 'package:truco_argentino_hardcoders/Screens/Signup/signup_screen.dart';
 import 'package:truco_argentino_hardcoders/Screens/Welcome/components/background.dart';
-import 'package:truco_argentino_hardcoders/components/rounded_button.dart';
+import 'package:truco_argentino_hardcoders/components/common/rounded_button.dart';
 
 class Body extends StatelessWidget {
   @override

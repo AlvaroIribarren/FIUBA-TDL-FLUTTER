@@ -6,7 +6,6 @@ import 'package:truco_argentino_hardcoders/Screens/Leaderboard/leaderboard_scree
 import 'package:truco_argentino_hardcoders/api/UserSchema.dart';
 import 'package:truco_argentino_hardcoders/api/api.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-import 'package:truco_argentino_hardcoders/components/gameboard.dart';
 
 class UserData extends StatefulWidget {
   const UserData({Key key}) : super(key: key);

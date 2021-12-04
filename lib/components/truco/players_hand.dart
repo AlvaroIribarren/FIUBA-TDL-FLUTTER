@@ -1,11 +1,9 @@
 import 'package:flutter/material.dart';
-import 'package:truco_argentino_hardcoders/components/card_back.dart';
-import 'package:truco_argentino_hardcoders/components/discarded_cards.dart';
-import 'package:truco_argentino_hardcoders/components/playing_card.dart';
+import 'discarded_cards.dart';
+import 'playing_card.dart';
 import 'package:truco_argentino_hardcoders/constants.dart';
 import 'package:truco_argentino_hardcoders/models/card_model.dart';
 import 'package:truco_argentino_hardcoders/models/hand_model.dart';
-import 'package:truco_argentino_hardcoders/models/player_model.dart';
 
 class PlayersHandContainer extends StatelessWidget {
   final Widget child;
@@ -40,7 +38,7 @@ class PlayersHandContainer extends StatelessWidget {
             ),
           ),
           SizedBox(
-              height: CARD_HEIGHT * size,
+              height: CARD_HEIGHT * size + 10,
               width: double.infinity,
               child: ListView.builder(
                 scrollDirection: Axis.horizontal,
@@ -54,6 +52,7 @@ class PlayersHandContainer extends StatelessWidget {
                       size: size,
                       visible: this.isMainPlayer,
                       onPlayCard: onPlayCard,
+                      blocked: currentHand.bloqueada,
                     ),
                   );
                 },

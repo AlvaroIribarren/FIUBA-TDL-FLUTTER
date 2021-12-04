@@ -1,7 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:truco_argentino_hardcoders/components/card_back.dart';
-import 'package:truco_argentino_hardcoders/components/rounded_button.dart';
+import 'package:truco_argentino_hardcoders/components/truco/card_back.dart';
 
 import '../constants.dart';
 
@@ -20,10 +19,6 @@ class CardModel extends StatelessWidget {
   final int order;
   final Widget child;
   final bool visible;
-
-  String get Value => value;
-  // String get Suit => suit;
-  int get EnvidoValue => envidoValue;
 
   const CardModel({
     Key key,

@@ -27,6 +27,22 @@ class Annotator {
     }
   }
 
+  addRoundPointsToOtherPlayer(PlayerModel loserPlayer, int points) {
+    if (loserPlayer.isHuman) {
+      roundPointsBot += points;
+    } else {
+      roundPointsPlayer += points;
+    }
+  }
+
+  addRoundPoints(PlayerModel player, int points) {
+    if (player.isHuman) {
+      roundPointsPlayer += points;
+    } else {
+      roundPointsBot += points;
+    }
+  }
+
   newRound() {
     turnPointsBot = 0;
     turnPointsPlayer = 0;
@@ -46,11 +62,11 @@ class Annotator {
 
   bool endGame() {
     //TODO: Cabmiar a 15 para jugar
-    if (roundPointsBot == 2) {
+    if (roundPointsBot == 15) {
       winnersName = playerBotName;
       return true;
     }
-    if (roundPointsPlayer == 2) {
+    if (roundPointsPlayer == 15) {
       winnersName = playerHumanName;
       return true;
     }

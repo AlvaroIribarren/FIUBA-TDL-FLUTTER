@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:truco_argentino_hardcoders/models/card_model.dart';
-import 'package:truco_argentino_hardcoders/models/turn_action.dart';
+import 'package:truco_argentino_hardcoders/models/actions/turn_action.dart';
 
 class TurnActionsContainer extends StatelessWidget {
   final CardModel card;
@@ -23,9 +23,20 @@ class TurnActionsContainer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Padding(
       padding: const EdgeInsets.all(8.0),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.end,
-        children: actions,
+      child: Container(
+        alignment: Alignment.bottomRight,
+        child: Column(
+          children: actions
+              .map(
+                (e) => Padding(
+                  padding: const EdgeInsets.all(8.0),
+                  child: e,
+                ),
+              )
+              .toList(),
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.end,
+        ),
       ),
     );
   }

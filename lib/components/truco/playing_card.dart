@@ -1,6 +1,5 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:truco_argentino_hardcoders/components/rounded_button.dart';
 import 'package:truco_argentino_hardcoders/constants.dart';
 import 'package:truco_argentino_hardcoders/models/card_model.dart';
 
@@ -10,6 +9,7 @@ class PlayingCard extends StatelessWidget {
   final CardModel card;
   final double size;
   final bool visible;
+  final bool blocked;
   final Function(CardModel) onPlayCard;
 
   const PlayingCard({
@@ -18,6 +18,7 @@ class PlayingCard extends StatelessWidget {
     this.size = 1,
     this.visible = false,
     this.onPlayCard,
+    this.blocked = false,
   }) : super(key: key);
 
   @override
@@ -27,12 +28,15 @@ class PlayingCard extends StatelessWidget {
         if (onPlayCard != null) onPlayCard(card);
       },
       child: Container(
-        height: CARD_HEIGHT * size,
-        width: CARD_WIDTH * size,
-        decoration: BoxDecoration(
+        foregroundDecoration: BoxDecoration(
+          color: blocked && visible
+              ? Color.fromRGBO(128, 128, 128, 0.75)
+              : Colors.transparent,
           borderRadius: BorderRadius.circular(4.8),
         ),
-        clipBehavior: Clip.antiAlias,
+        height: CARD_HEIGHT * size,
+        // width: CARD_WIDTH * size,
+        // clipBehavior: Clip.antiAlias,
         child: visible ? Image.asset(card.image) : CardBack(),
       ),
     );

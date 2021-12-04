@@ -5,7 +5,7 @@ import 'package:truco_argentino_hardcoders/models/annotator.dart';
 import 'package:truco_argentino_hardcoders/models/card_model.dart';
 import 'package:truco_argentino_hardcoders/models/hand_model.dart';
 import 'package:truco_argentino_hardcoders/models/player_model.dart';
-import 'package:truco_argentino_hardcoders/models/turn_action.dart';
+import 'package:truco_argentino_hardcoders/models/actions/turn_action.dart';
 import 'package:truco_argentino_hardcoders/models/turn_model.dart';
 
 import '../constants.dart';
@@ -15,7 +15,7 @@ class GameProvider with ChangeNotifier {
     _service = DeckModel();
   }*/
 
-  bool _envido;
+  // bool _envido;
 
   Annotator annotator;
 
@@ -27,12 +27,10 @@ class GameProvider with ChangeNotifier {
 
   List<CardModel> cards;
 
-  // List<CardModel> _discards = [];
-  // List<CardModel> get discards => _discards;
-
-  // Map<String, dynamic> gameState = {};
+  int roundNumber = 0;
 
   void newGame(List<PlayerModel> players) {
+    roundNumber = 0;
     print("Creating a new game");
     _players = players;
     _turn = Turn(players: players, currentPlayer: players.first);
@@ -71,80 +69,124 @@ class GameProvider with ChangeNotifier {
     var hand2 = HandModel(cards: hands[1]);
     players[0].assignNewHand(hand1);
     players[1].assignNewHand(hand2);
+
     _turn = Turn(players: players, currentPlayer: players.first);
-    // players[0].setEnvido(true);
-    // players[1].setEnvido(true);
-    _envido = false;
-    // _discards = [];
-  }
 
-  bool canPlayCard(CardModel card) {
-    return true;
-  }
-
-  bool canEnvido(PlayerModel player) {
-    // return player.getEnvido;
+    players[0].resetDesafios();
+    players[1].resetDesafios();
   }
 
   cantarEnvido(PlayerModel player) {
-    _turn.seCantoEnvido(player);
+    _turn.cantarEnvido(player);
+    _turn.swapCurrentPlayer();
+    if (_turn.currentPlayer.isBot) {
+      botActionResponse();
+    }
+    notifyListeners();
   }
 
-  void envido(PlayerModel player) {
-    print("Envido gato!");
-    // player.setEnvido(false);
-    _envido = true;
-    endTurn();
+  rechazarEnvido(PlayerModel player) {
+    _turn.cantarEnvido(player);
+    annotator.addRoundPointsToOtherPlayer(player, 1);
+    _turn.swapCurrentPlayer();
+    _turn.desbloquearManos();
+    if (_turn.currentPlayer.isBot) {
+      botPlayCard();
+    }
+    notifyListeners();
+  }
+
+  aceptarEnvido(PlayerModel player) {
+    _turn.cantarEnvido(player);
+    PlayerModel winner = _turn.findWinnerEnvidoPlayer();
+    annotator.addRoundPoints(winner, 2);
+    _turn.swapCurrentPlayer();
+    _turn.desbloquearManos();
+    if (_turn.currentPlayer.isBot) {
+      botPlayCard();
+    }
+    notifyListeners();
+  }
+
+  cantarTruco(PlayerModel player) {
+    _turn.cantarTruco(player);
+    _turn.swapCurrentPlayer();
+    if (_turn.currentPlayer.isBot) {
+      botActionResponse();
+    }
+    notifyListeners();
+  }
+
+  rechazarTruco(PlayerModel player) {
+    annotator.addRoundPointsToOtherPlayer(player, 1);
+    _turn.swapCurrentPlayer();
+    // reset round
+    endRound();
+    _turn.desbloquearManos();
+    if (_turn.currentPlayer.isBot) {
+      botTurn();
+    }
+    notifyListeners();
+  }
+
+  aceptarTruco(PlayerModel player) {
+    _turn.cantarTruco(player);
+    _turn.swapCurrentPlayer();
+    _turn.desbloquearManos();
+    if (_turn.currentPlayer.isBot) {
+      botPlayCard();
+    }
+    notifyListeners();
+  }
+
+  _sumarPuntosSiHuboTruco() {
+    bool huboTruco = _turn.huboTruco();
+    // TODO: si huboTruco, sumar +2 a quien haya ganado la ronda
   }
 
   Future<void> playCard({
     PlayerModel player,
     CardModel card,
   }) async {
-    if (player != _turn.currentPlayer) return;
-
+    if (player != _turn.currentPlayer || player.tieneManoBloqueada()) return;
+    print("*** JUEGA ${player.name}");
     player.discardCard(card);
-
-    // _discards.add(card);
-
     _turn.playsCount += 1;
-
-    // player.setEnvido(false);
-
     endTurn();
     // endPlay();
   }
 
-  bool get canEndTurn {
-    return true;
-    //Si no jugó una carta, no podría pasar el turno
-  }
-
-  List<TurnAction> getTurnActions() {
+  List<TurnAction> _getTurnActions() {
     return _turn.getTurnActions(this);
   }
 
-  Future<void> endTurn() {
+  List<TurnAction> getUITurnActions() {
+    if (_turn.currentPlayer.isHuman) {
+      return _turn.getTurnActions(this);
+    }
+
+    return [];
+  }
+
+  Future<void> endTurn() async {
     notifyListeners();
 
-    print("fin de turno/jugada");
+    // print("fin de turno/jugada");
     if (_turn.reachedEndOfTurn()) {
-      print("final de turno. currplayer: ${_turn.currentPlayer.name}");
+      // print("final de turno. currplayer: ${_turn.currentPlayer.name}");
       var perdedor = _turn.getLoserPlayer();
       _turn.asignarJugadorActual(perdedor);
       annotator.addPointsPerTurn(_turn.otherPlayer, 1);
-      print(
-          "final de turno, cambio actual. currplayer: ${_turn.currentPlayer.name}");
     }
 
     print("player points: ${annotator.turnPointsPlayer}");
     print("bot points: ${annotator.turnPointsBot}");
 
     if (annotator.endRound()) {
-      return endRound();
+      await endRound();
+    } else {
+      _turn.nextTurn();
     }
-
-    _turn.nextTurn();
 
     print("ahora va a jugar currplayer: ${_turn.currentPlayer.name}");
 
@@ -161,51 +203,57 @@ class GameProvider with ChangeNotifier {
     return cards[i];
   }
 
+  Future<void> botActionResponse() async {
+    assert(_turn.currentPlayer == players[1]);
+
+    await Future.delayed(const Duration(milliseconds: 500));
+    List<TurnAction> possibleActions = _getTurnActions();
+    print("% Bot debe responder. Opciones: $possibleActions");
+
+    // TODO: tomar decision logica...
+    possibleActions[1].executeAction();
+  }
+
   Future<void> botTurn() async {
     await Future.delayed(const Duration(milliseconds: 500));
 
-    List<TurnAction> possibleActions = getTurnActions();
+    List<TurnAction> possibleActions = _getTurnActions();
     print(possibleActions);
 
-    List<int> envido1 = [];
-    // if (_envido) {
-    //   for (var i = 0; i < players[1].cards.length - 1; i++) {
-    //     for (var j = 1; j < players[1].cards.length; j++) {
-    //       if (players[1].cards[i].Suit == players[1].cards[j].Suit && i != j) {
-    //         envido1.add(players[1].cards[i].EnvidoValue +
-    //             players[1].cards[j].EnvidoValue);
-    //       }
-    //     }
-    //   }
-    //   print(envido1.reduce(max));
-    //   _envido = false;
-    //   endTurn();
-    //   return null;
-    // }
+    // TODO: cambiar por random, NO por length != 0
+    if (possibleActions.length != 0) {
+      possibleActions[0].executeAction();
+    } else {
+      botPlayCard();
+    }
+  }
 
-    var card = getRandomElement(players[1].currentHand.cards);
-
-    players[1].discardCard(card);
-
-    // _discards.add(card);
-
-    _turn.playsCount += 1;
-
-    // players[1].setEnvido(false);
-
+  Future<void> botPlayCard() async {
     await Future.delayed(const Duration(milliseconds: 500));
-
-    endTurn();
+    var card = getRandomElement(players[1].currentHand.cards);
+    playCard(player: players[1], card: card);
   }
 
   Future<void> endRound() async {
     await Future.delayed(const Duration(milliseconds: 500));
     if (!annotator.endGame()) {
+      _sumarPuntosSiHuboTruco();
+      // siguiente ronda
       setupBoard(players);
+      roundNumber += 1;
+      print("-- Valor de roundNumber: $roundNumber");
+      _turn.swapPlayerForFirstTurn(
+          roundNumber); // para que ahora arranque el otro
       annotator.newRound();
+      print("============== TERMINO RONDA");
       notifyListeners();
     } else {
       print("${annotator.getWinnersName} Gana la partida!");
     }
+  }
+
+  // TODO: BORRAR
+  String getCurrentPlayerName() {
+    return _turn.currentPlayer.name;
   }
 }

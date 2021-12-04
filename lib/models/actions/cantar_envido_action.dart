@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:truco_argentino_hardcoders/models/turn_action.dart';
+import 'turn_action.dart';
 
 class CantarEnvidoAction extends TurnAction {
   final model;
