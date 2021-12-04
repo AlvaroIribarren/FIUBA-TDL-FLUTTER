@@ -2,13 +2,13 @@ import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:truco_argentino_hardcoders/models/annotator.dart';
-import 'package:truco_argentino_hardcoders/constants.dart';
 import 'package:truco_argentino_hardcoders/models/card_model.dart';
-import 'package:truco_argentino_hardcoders/models/deck_model.dart';
 import 'package:truco_argentino_hardcoders/models/hand_model.dart';
 import 'package:truco_argentino_hardcoders/models/player_model.dart';
 import 'package:truco_argentino_hardcoders/models/turn_action.dart';
 import 'package:truco_argentino_hardcoders/models/turn_model.dart';
+
+import '../constants.dart';
 
 class GameProvider with ChangeNotifier {
   /*GameProvider() {

@@ -1,11 +1,12 @@
 import 'dart:convert';
 
-import 'package:truco_argentino_hardcoders/api/LoginResponse.dart';
-import 'package:truco_argentino_hardcoders/api/UserSchema.dart';
+
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
 import '../constants.dart';
+import 'LoginResponse.dart';
+import 'UserSchema.dart';
 
 class Api {
   Api();

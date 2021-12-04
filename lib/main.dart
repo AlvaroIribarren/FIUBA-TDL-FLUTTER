@@ -1,10 +1,11 @@
 //import 'dart:html';
 
 import 'package:flutter/material.dart';
-import 'package:truco_argentino_hardcoders/Screens/Welcome/welcome_screen.dart';
-import 'package:truco_argentino_hardcoders/constants.dart';
-import 'package:truco_argentino_hardcoders/services/game_provider.dart';
+
 import 'package:provider/provider.dart';
+
+import 'Screens/Welcome/welcome_screen.dart';
+import 'constants.dart';
 
 void main() async {
   runApp(MyApp());
