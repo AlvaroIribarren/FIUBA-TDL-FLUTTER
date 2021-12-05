@@ -114,7 +114,7 @@ class _GameScreenState extends State<GameScreen> {
                         width: 125,
                         child: Center(
                           child: Text(
-                            "Lider \nBoard",
+                            "Leaderboard",
                             style: TextStyle(
                                 color: Colors.white70,
                                 fontWeight: FontWeight.bold,
