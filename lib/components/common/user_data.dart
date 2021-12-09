@@ -39,10 +39,6 @@ class _UserDataState extends State<UserData> {
             return Container(child: Center(child: Text('Cargando...')));
           } else {
             return Scaffold(
-              body: Text(
-                "Hola, ${snapshot.data.email} presiona el boton superior \n para comenzar un nuevo juego",
-                textAlign: TextAlign.center,
-              ),
               floatingActionButton: FloatingActionButton(
                 onPressed: () {
                   Navigator.push(

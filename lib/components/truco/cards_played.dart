@@ -4,6 +4,8 @@ import 'playing_card.dart';
 import 'package:truco_argentino_hardcoders/constants.dart';
 import 'package:truco_argentino_hardcoders/models/card_model.dart';
 
+import '../../constants.dart';
+
 class CardPlayed extends StatelessWidget {
   final List<CardModel> cards;
   final double size;

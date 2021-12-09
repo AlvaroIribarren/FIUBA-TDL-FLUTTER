@@ -10,7 +10,9 @@ import 'package:truco_argentino_hardcoders/services/game_provider.dart';
 import 'package:provider/provider.dart';
 
 class GameBoard extends StatelessWidget {
-  const GameBoard({Key key}) : super(key: key);
+
+  const GameBoard({Key key}
+  ) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
