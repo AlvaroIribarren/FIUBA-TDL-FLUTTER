@@ -15,7 +15,8 @@ class AceptarEnvidoAction extends TurnAction {
   @override
   Widget build(BuildContext context) {
     return ElevatedButton(
-      child: const Text("Aceptar Envido"), onPressed: this.executeAction,
+      child: const Text("Aceptar Envido"), onPressed:
+        this.executeAction,
       // : null,
       // child: const Text("Envido!"),
     );

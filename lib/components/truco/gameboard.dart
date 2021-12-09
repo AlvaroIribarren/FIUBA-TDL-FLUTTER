@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'annotator_widget.dart';
+import 'envido_widget.dart';
 import 'players_hand.dart';
 import 'turn_actions.dart';
 import 'package:truco_argentino_hardcoders/components/common/user_data.dart';
@@ -45,7 +46,13 @@ class GameBoard extends StatelessWidget {
                       ),
                     Text(
                       "DEBUG - currentPlayer: ${model.getCurrentPlayerName()}",
-                    ) // TODO: borrar
+                    ),
+                    // ignore: sdk_version_ui_as_code,
+                    if(model.envido)
+                     EnvidoWidget(
+                       model: model
+                     ),
+                    // TODO: borrar
                   ],
                 ),
               )

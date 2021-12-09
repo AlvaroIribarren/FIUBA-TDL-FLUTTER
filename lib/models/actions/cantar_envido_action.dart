@@ -25,6 +25,12 @@ class CantarEnvidoAction extends TurnAction {
   executeAction() {
     print("ENVIDO!");
     this.model.cantarEnvido(this.playerOwner);
+    if(this.playerOwner.isBot) {
+      return Container(
+        color: Colors.black,
+      );
+    }
+
     // <otro jugador acepta o no>
   }
 }

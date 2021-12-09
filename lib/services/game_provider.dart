@@ -15,7 +15,7 @@ class GameProvider with ChangeNotifier {
     _service = DeckModel();
   }*/
 
-  // bool _envido;
+  bool envido = false;
 
   Annotator annotator;
 
@@ -97,6 +97,7 @@ class GameProvider with ChangeNotifier {
   }
 
   aceptarEnvido(PlayerModel player) {
+    envido = true;
     _turn.cantarEnvido(player);
     PlayerModel winner = _turn.findWinnerEnvidoPlayer();
     annotator.addRoundPoints(winner, 2);
@@ -171,6 +172,10 @@ class GameProvider with ChangeNotifier {
   Future<void> endTurn() async {
     notifyListeners();
 
+    if(envido) {
+      await Future.delayed(const Duration(milliseconds: 1500));
+      envido = false;
+    }
     // print("fin de turno/jugada");
     if (_turn.reachedEndOfTurn()) {
       // print("final de turno. currplayer: ${_turn.currentPlayer.name}");
