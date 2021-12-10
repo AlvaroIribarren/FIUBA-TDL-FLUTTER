@@ -1,3 +1,4 @@
+import 'package:audioplayers/audioplayers.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
@@ -6,6 +7,8 @@ import 'turn_action.dart';
 class CantarEnvidoAction extends TurnAction {
   final model;
   final playerOwner;
+  final playerx = new AudioCache(fixedPlayer: AudioPlayer());
+  AudioPlayer audioPlayer = AudioPlayer(mode: PlayerMode.LOW_LATENCY);
 
   CantarEnvidoAction({
     this.model,
@@ -25,7 +28,10 @@ class CantarEnvidoAction extends TurnAction {
   executeAction() {
     print("ENVIDO!");
     this.model.cantarEnvido(this.playerOwner);
-    if(this.playerOwner.isBot) {
+    if (this.playerOwner.isBot) {
+      playerx.fixedPlayer.stop();
+      playerx.play('audios/cantar_envido.mp3');
+      // audioPlayer.play('/assets/cantar_envido.mp3', isLocal: true);
       return Container(
         color: Colors.black,
       );

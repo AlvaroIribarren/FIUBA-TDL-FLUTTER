@@ -11,9 +11,7 @@ import 'package:truco_argentino_hardcoders/services/game_provider.dart';
 import 'package:provider/provider.dart';
 
 class GameBoard extends StatelessWidget {
-
-  const GameBoard({Key key}
-  ) : super(key: key);
+  const GameBoard({Key key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -43,15 +41,13 @@ class GameBoard extends StatelessWidget {
                     if (model.annotator.endGame())
                       WinnerBanner(
                         winnersName: model.annotator.getWinnersName,
+                        model: model,
                       ),
                     Text(
                       "DEBUG - currentPlayer: ${model.getCurrentPlayerName()}",
                     ),
                     // ignore: sdk_version_ui_as_code,
-                    if(model.envido)
-                     EnvidoWidget(
-                       model: model
-                     ),
+                    if (model.envido) EnvidoWidget(model: model),
                     // TODO: borrar
                   ],
                 ),

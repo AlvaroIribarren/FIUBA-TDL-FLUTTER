@@ -31,7 +31,7 @@ class HandModel {
 
   int valorDeEnvido() {
     List<CardModel> allCards = cards + discards;
-    // TODO: si tengo 10, 11, 12 de palos distintos tengo 0 de envido?
+    // TODO: si tengo 10, 11, 12 de palos distintos tengo 0 de envido? si
     List<int> envidos = allCards.map((e) => e.envidoValue).toList();
 
     for (var i = 0; i < allCards.length - 1; i++) {

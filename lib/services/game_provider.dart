@@ -118,11 +118,11 @@ class GameProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  rechazarTruco(PlayerModel player) {
+  rechazarTruco(PlayerModel player) async {
     annotator.addRoundPointsToOtherPlayer(player, 1);
     _turn.swapCurrentPlayer();
     // reset round
-    endRound();
+    await endRound();
     _turn.desbloquearManos();
     if (_turn.currentPlayer.isBot) {
       botTurn();
@@ -141,7 +141,14 @@ class GameProvider with ChangeNotifier {
   }
 
   _sumarPuntosSiHuboTruco() {
-    bool huboTruco = _turn.huboTruco();
+    if (_turn.huboTruco()) {
+      PlayerModel winner = _turn.findWinnerTrucoPlayer(
+        annotator.roundPointsBot,
+        annotator.roundPointsPlayer,
+      );
+      annotator.addRoundPoints(winner, 1);
+    }
+    ;
     // TODO: si huboTruco, sumar +2 a quien haya ganado la ronda
   }
 
@@ -172,7 +179,7 @@ class GameProvider with ChangeNotifier {
   Future<void> endTurn() async {
     notifyListeners();
 
-    if(envido) {
+    if (envido) {
       await Future.delayed(const Duration(milliseconds: 1500));
       envido = false;
     }
@@ -216,7 +223,9 @@ class GameProvider with ChangeNotifier {
     print("% Bot debe responder. Opciones: $possibleActions");
 
     // TODO: tomar decision logica...
-    possibleActions[1].executeAction();
+    final random = new Random();
+    int i = random.nextInt(1);
+    possibleActions[i].executeAction();
   }
 
   Future<void> botTurn() async {
@@ -260,5 +269,17 @@ class GameProvider with ChangeNotifier {
   // TODO: BORRAR
   String getCurrentPlayerName() {
     return _turn.currentPlayer.name;
+  }
+
+  irseAlMazo() {
+    annotator.addRoundPointsToOtherPlayer(players[0], 1);
+    _turn.swapCurrentPlayer();
+    // reset round
+    endRound();
+    _turn.desbloquearManos();
+    if (_turn.currentPlayer.isBot) {
+      botTurn();
+    }
+    notifyListeners();
   }
 }

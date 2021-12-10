@@ -62,11 +62,11 @@ class Annotator {
 
   bool endGame() {
     //TODO: Cabmiar a 15 para jugar
-    if (roundPointsBot == 15) {
+    if (roundPointsBot >= 2) {
       winnersName = playerBotName;
       return true;
     }
-    if (roundPointsPlayer == 15) {
+    if (roundPointsPlayer >= 2) {
       winnersName = playerHumanName;
       return true;
     }

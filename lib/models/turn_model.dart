@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:truco_argentino_hardcoders/models/actions/aceptar_envido_action.dart';
 import 'package:truco_argentino_hardcoders/models/actions/aceptar_truco_action.dart';
 import 'package:truco_argentino_hardcoders/models/actions/cantar_envido_action.dart';
@@ -7,6 +9,8 @@ import 'package:truco_argentino_hardcoders/models/player_model.dart';
 import 'package:truco_argentino_hardcoders/models/actions/rechazar_envido_action.dart';
 import 'package:truco_argentino_hardcoders/models/actions/turn_action.dart';
 import 'package:truco_argentino_hardcoders/services/game_provider.dart';
+
+import 'actions/irse_mazo_action.dart';
 
 class Turn {
   final List<PlayerModel> players;
@@ -59,8 +63,15 @@ class Turn {
   List<TurnAction> getTurnActions(GameProvider model) {
     List<TurnAction> actions = [];
 
+    if (model.annotator.endGame()) {
+      players[0].bloquearMano();
+      players[1].bloquearMano();
+      return [];
+    }
     if (turnNumber < 1) actions += _getEnvidoActions(model);
     if (turnNumber >= 1) actions += _getTrucoActions(model);
+
+    actions += _getIrseAlMazoActions(model);
 
     return actions;
   }
@@ -152,5 +163,18 @@ class Turn {
     }
 
     return [];
+  }
+
+  List<TurnAction> _getIrseAlMazoActions(GameProvider model) {
+    return [IrseAlMazoAction(model: model, playerOwner: currentPlayer)];
+  }
+
+  PlayerModel findWinnerTrucoPlayer(int roundPointsBot, int roundPointsPlayer) {
+    print(roundPointsBot);
+    print(roundPointsPlayer);
+    if (roundPointsBot > roundPointsPlayer) {
+      return players[0];
+    }
+    return players[1];
   }
 }
