@@ -146,8 +146,8 @@ class GameProvider with ChangeNotifier {
   _sumarPuntosSiHuboTruco() {
     if (_turn.huboTruco()) {
       PlayerModel winner = _turn.findWinnerTrucoPlayer(
-        annotator.roundPointsBot,
-        annotator.roundPointsPlayer,
+        annotator.turnPointsBot,
+        annotator.turnPointsPlayer,
       );
       annotator.addRoundPoints(winner, 1);
     }
@@ -163,7 +163,6 @@ class GameProvider with ChangeNotifier {
     player.discardCard(card);
     _turn.playsCount += 1;
     endTurn();
-    // endPlay();
   }
 
   List<TurnAction> _getTurnActions() {
@@ -185,9 +184,7 @@ class GameProvider with ChangeNotifier {
       await Future.delayed(const Duration(milliseconds: 1500));
       envido = false;
     }
-    // print("fin de turno/jugada");
     if (_turn.reachedEndOfTurn()) {
-      // print("final de turno. currplayer: ${_turn.currentPlayer.name}");
       var perdedor = _turn.getLoserPlayer();
       _turn.asignarJugadorActual(perdedor);
       annotator.addPointsPerTurn(_turn.otherPlayer, 1);
@@ -226,7 +223,7 @@ class GameProvider with ChangeNotifier {
     print("% Bot debe responder. Opciones: $possibleActions");
 
     final random = new Random();
-    int i = random.nextInt(1);
+    int i = random.nextInt(2);
     possibleActions[i].executeAction();
   }
 
@@ -234,10 +231,11 @@ class GameProvider with ChangeNotifier {
     await Future.delayed(const Duration(milliseconds: 500));
 
     List<TurnAction> possibleActions = _getTurnActions();
-    print(possibleActions);
-
-    if (possibleActions.length != 0) {
-      possibleActions[0].executeAction();
+    print("posibble actions: ${possibleActions}");
+    final random = new Random();
+    int i = random.nextInt(2);
+    if (i == 0 && possibleActions.length != 0) {
+      possibleActions[i].executeAction();
     } else {
       botPlayCard();
     }

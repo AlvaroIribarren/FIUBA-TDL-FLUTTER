@@ -109,7 +109,7 @@ class Turn {
   }
 
   bool huboTruco() {
-    return currentPlayer.cantoTruco && otherPlayer.cantoTruco;
+    return currentPlayer.cantoTruco || otherPlayer.cantoTruco;
   }
 
   swapPlayerForFirstTurn(int currentRoundNumber) {
@@ -181,12 +181,10 @@ class Turn {
     return [IrseAlMazoAction(model: model, playerOwner: currentPlayer)];
   }
 
-  PlayerModel findWinnerTrucoPlayer(int roundPointsBot, int roundPointsPlayer) {
-    print(roundPointsBot);
-    print(roundPointsPlayer);
-    if (roundPointsBot > roundPointsPlayer) {
-      return players[0];
+  PlayerModel findWinnerTrucoPlayer(int turnPointsBot, int turnPointsPlayer) {
+    if (turnPointsBot > turnPointsPlayer) {
+      return players[1];
     }
-    return players[1];
+    return players[0];
   }
 }
