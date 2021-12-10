@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:truco_argentino_hardcoders/Screens/Login/components/background.dart';
 import 'package:truco_argentino_hardcoders/Screens/Signup/signup_screen.dart';
 import 'package:truco_argentino_hardcoders/Screens/main_screen.dart';
+import 'package:truco_argentino_hardcoders/api/LoginResponse.dart';
 import 'package:truco_argentino_hardcoders/api/api.dart';
 import 'package:truco_argentino_hardcoders/components/common/already_have_an_account_acheck.dart';
 import 'package:truco_argentino_hardcoders/components/common/rounded_button.dart';
@@ -49,20 +50,19 @@ class Body extends StatelessWidget {
               color: Colors.green.shade400,
               text: "INICIAR SESION",
               press: () async {
-                // TODO: DESCOMENTAR PARA REHABILITAR LOGIN!
-                // LoginResponse response = await api.login(email, pass);
+                LoginResponse response = await api.login(email, pass);
 
-                // if (response.user.id != 0) {
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) {
-                      return MainScreen();
-                    },
-                  ),
-                  (Route<dynamic> route) => false,
-                );
-                // }
+                if (response.user.id != 0) {
+                  Navigator.pushAndRemoveUntil(
+                    context,
+                    MaterialPageRoute(
+                      builder: (context) {
+                        return MainScreen();
+                      },
+                    ),
+                    (Route<dynamic> route) => false,
+                  );
+                }
               },
             ),
             SizedBox(height: size.height * 0.03),

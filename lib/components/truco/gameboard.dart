@@ -15,45 +15,45 @@ class GameBoard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Consumer<GameProvider>(
-      builder: (context, model, child) {
-        return model.players.isNotEmpty
-            ? Container(
-                decoration: BoxDecoration(
-                  color: Colors.green,
-                  // borderRadius: BorderRadius.circular(29),
-                ),
-                child: Stack(
-                  children: [
-                    PlayersHandContainer(
-                      currentHand: model.players[1].currentHand,
-                      isMainPlayer: false,
-                    ),
-                    PlayersHandContainer(
-                        currentHand: model.players[0].currentHand,
-                        isMainPlayer: true,
-                        onPlayCard: (CardModel card) {
-                          model.playCard(player: model.players[0], card: card);
-                        }),
-                    TurnActionsContainer(actions: model.getUITurnActions()),
-                    AnnotatorWidget(annotator: model.annotator),
-                    // ignore: sdk_version_ui_as_code,
-                    if (model.annotator.endGame())
-                      WinnerBanner(
-                        winnersName: model.annotator.getWinnersName,
-                        model: model,
+    return new WillPopScope(
+      onWillPop: () async => false,
+      child: Consumer<GameProvider>(
+        builder: (context, model, child) {
+          return model.players.isNotEmpty
+              ? Container(
+                  decoration: BoxDecoration(
+                    color: Colors.green,
+                    // borderRadius: BorderRadius.circular(29),
+                  ),
+                  child: Stack(
+                    children: [
+                      PlayersHandContainer(
+                        currentHand: model.players[1].currentHand,
+                        isMainPlayer: false,
                       ),
-                    Text(
-                      "DEBUG - currentPlayer: ${model.getCurrentPlayerName()}",
-                    ),
-                    // ignore: sdk_version_ui_as_code,
-                    if (model.envido) EnvidoWidget(model: model),
-                    // TODO: borrar
-                  ],
-                ),
-              )
-            : Center(child: UserData());
-      },
+                      PlayersHandContainer(
+                          currentHand: model.players[0].currentHand,
+                          isMainPlayer: true,
+                          onPlayCard: (CardModel card) {
+                            model.playCard(
+                                player: model.players[0], card: card);
+                          }),
+                      TurnActionsContainer(actions: model.getUITurnActions()),
+                      AnnotatorWidget(annotator: model.annotator),
+                      // ignore: sdk_version_ui_as_code,
+                      if (model.annotator.endGame())
+                        WinnerBanner(
+                          winnersName: model.annotator.getWinnersName,
+                          model: model,
+                        ),
+                      // ignore: sdk_version_ui_as_code,
+                      if (model.envido) EnvidoWidget(model: model),
+                    ],
+                  ),
+                )
+              : Center(child: UserData());
+        },
+      ),
     );
   }
 }

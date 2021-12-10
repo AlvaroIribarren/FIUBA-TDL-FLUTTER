@@ -60,6 +60,17 @@ class Turn {
   //   // return _cantoEnvido[players.indexOf(this.currentPlayer)];
   // }
 
+  bool alguienCantoEnvido() {
+    return currentPlayer.cantoEnvido || otherPlayer.cantoEnvido;
+  }
+
+  int getPuntosAlIrseAlMazo() {
+    if (turnNumber <= 1 && !alguienCantoEnvido()) {
+      return 2;
+    }
+    return 1;
+  }
+
   List<TurnAction> getTurnActions(GameProvider model) {
     List<TurnAction> actions = [];
 
@@ -71,7 +82,9 @@ class Turn {
     if (turnNumber < 1) actions += _getEnvidoActions(model);
     if (turnNumber >= 1) actions += _getTrucoActions(model);
 
-    actions += _getIrseAlMazoActions(model);
+    if (currentPlayer == players[0]) {
+      actions += _getIrseAlMazoActions(model);
+    }
 
     return actions;
   }
@@ -88,7 +101,6 @@ class Turn {
     var cardOther =
         otherPlayer.currentHand.cardPlayedInTurn(turnNumber.toInt());
 
-    // TODO: arreglar empate/parda
     if (cardCurr > cardOther) {
       return otherPlayer;
     } else {

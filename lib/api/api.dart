@@ -1,6 +1,5 @@
 import 'dart:convert';
 
-
 import 'package:http/http.dart' as http;
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -35,6 +34,7 @@ class Api {
       //Save id to sort of localstorage
       final prefs = await SharedPreferences.getInstance();
       prefs.setInt('userId', res.id);
+      prefs.setString('email', parseEmail(res.email));
       return res;
     } else {
       return UserSchema.createError();
@@ -63,6 +63,7 @@ class Api {
       if (res.logged) {
         final prefs = await SharedPreferences.getInstance();
         prefs.setInt('userId', res.user.id);
+        prefs.setString('email', parseEmail(res.user.email));
         return res;
       }
     }
@@ -76,5 +77,10 @@ class Api {
     var response =
         await http.patch(userById, body: {"points": user.points.toString()});
     print(response);
+  }
+
+  String parseEmail(String email) {
+    final strings = email.split("@");
+    return strings[0];
   }
 }
