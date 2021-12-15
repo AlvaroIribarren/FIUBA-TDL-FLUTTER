@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:truco_argentino_hardcoders/models/actions/aceptar_envido_action.dart';
 import 'package:truco_argentino_hardcoders/models/actions/aceptar_truco_action.dart';
 import 'package:truco_argentino_hardcoders/models/actions/cantar_envido_action.dart';
@@ -7,6 +9,8 @@ import 'package:truco_argentino_hardcoders/models/player_model.dart';
 import 'package:truco_argentino_hardcoders/models/actions/rechazar_envido_action.dart';
 import 'package:truco_argentino_hardcoders/models/actions/turn_action.dart';
 import 'package:truco_argentino_hardcoders/services/game_provider.dart';
+
+import 'actions/irse_mazo_action.dart';
 
 class Turn {
   final List<PlayerModel> players;
@@ -56,11 +60,31 @@ class Turn {
   //   // return _cantoEnvido[players.indexOf(this.currentPlayer)];
   // }
 
+  bool alguienCantoEnvido() {
+    return currentPlayer.cantoEnvido || otherPlayer.cantoEnvido;
+  }
+
+  int getPuntosAlIrseAlMazo() {
+    if (turnNumber <= 1 && !alguienCantoEnvido()) {
+      return 2;
+    }
+    return 1;
+  }
+
   List<TurnAction> getTurnActions(GameProvider model) {
     List<TurnAction> actions = [];
 
+    if (model.annotator.endGame()) {
+      players[0].bloquearMano();
+      players[1].bloquearMano();
+      return [];
+    }
     if (turnNumber < 1) actions += _getEnvidoActions(model);
     if (turnNumber >= 1) actions += _getTrucoActions(model);
+
+    if (currentPlayer == players[0]) {
+      actions += _getIrseAlMazoActions(model);
+    }
 
     return actions;
   }
@@ -77,7 +101,6 @@ class Turn {
     var cardOther =
         otherPlayer.currentHand.cardPlayedInTurn(turnNumber.toInt());
 
-    // TODO: arreglar empate/parda
     if (cardCurr > cardOther) {
       return otherPlayer;
     } else {
@@ -86,7 +109,7 @@ class Turn {
   }
 
   bool huboTruco() {
-    return currentPlayer.cantoTruco && otherPlayer.cantoTruco;
+    return currentPlayer.cantoTruco || otherPlayer.cantoTruco;
   }
 
   swapPlayerForFirstTurn(int currentRoundNumber) {
@@ -152,5 +175,16 @@ class Turn {
     }
 
     return [];
+  }
+
+  List<TurnAction> _getIrseAlMazoActions(GameProvider model) {
+    return [IrseAlMazoAction(model: model, playerOwner: currentPlayer)];
+  }
+
+  PlayerModel findWinnerTrucoPlayer(int turnPointsBot, int turnPointsPlayer) {
+    if (turnPointsBot > turnPointsPlayer) {
+      return players[1];
+    }
+    return players[0];
   }
 }

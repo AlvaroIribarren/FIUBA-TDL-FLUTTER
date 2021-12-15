@@ -1,6 +1,8 @@
 import 'dart:math';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:truco_argentino_hardcoders/api/api.dart';
 import 'package:truco_argentino_hardcoders/models/annotator.dart';
 import 'package:truco_argentino_hardcoders/models/card_model.dart';
 import 'package:truco_argentino_hardcoders/models/hand_model.dart';
@@ -15,7 +17,8 @@ class GameProvider with ChangeNotifier {
     _service = DeckModel();
   }*/
 
-  // bool _envido;
+  Api api = Api();
+  bool envido = false;
 
   Annotator annotator;
 
@@ -97,6 +100,7 @@ class GameProvider with ChangeNotifier {
   }
 
   aceptarEnvido(PlayerModel player) {
+    envido = true;
     _turn.cantarEnvido(player);
     PlayerModel winner = _turn.findWinnerEnvidoPlayer();
     annotator.addRoundPoints(winner, 2);
@@ -117,11 +121,11 @@ class GameProvider with ChangeNotifier {
     notifyListeners();
   }
 
-  rechazarTruco(PlayerModel player) {
+  rechazarTruco(PlayerModel player) async {
     annotator.addRoundPointsToOtherPlayer(player, 1);
     _turn.swapCurrentPlayer();
     // reset round
-    endRound();
+    await endRound();
     _turn.desbloquearManos();
     if (_turn.currentPlayer.isBot) {
       botTurn();
@@ -140,8 +144,14 @@ class GameProvider with ChangeNotifier {
   }
 
   _sumarPuntosSiHuboTruco() {
-    bool huboTruco = _turn.huboTruco();
-    // TODO: si huboTruco, sumar +2 a quien haya ganado la ronda
+    if (_turn.huboTruco()) {
+      PlayerModel winner = _turn.findWinnerTrucoPlayer(
+        annotator.turnPointsBot,
+        annotator.turnPointsPlayer,
+      );
+      annotator.addRoundPoints(winner, 1);
+    }
+    ;
   }
 
   Future<void> playCard({
@@ -153,7 +163,6 @@ class GameProvider with ChangeNotifier {
     player.discardCard(card);
     _turn.playsCount += 1;
     endTurn();
-    // endPlay();
   }
 
   List<TurnAction> _getTurnActions() {
@@ -171,9 +180,11 @@ class GameProvider with ChangeNotifier {
   Future<void> endTurn() async {
     notifyListeners();
 
-    // print("fin de turno/jugada");
+    if (envido) {
+      await Future.delayed(const Duration(milliseconds: 1500));
+      envido = false;
+    }
     if (_turn.reachedEndOfTurn()) {
-      // print("final de turno. currplayer: ${_turn.currentPlayer.name}");
       var perdedor = _turn.getLoserPlayer();
       _turn.asignarJugadorActual(perdedor);
       annotator.addPointsPerTurn(_turn.otherPlayer, 1);
@@ -208,21 +219,23 @@ class GameProvider with ChangeNotifier {
 
     await Future.delayed(const Duration(milliseconds: 500));
     List<TurnAction> possibleActions = _getTurnActions();
+    //Saco el irse al mazo
     print("% Bot debe responder. Opciones: $possibleActions");
 
-    // TODO: tomar decision logica...
-    possibleActions[1].executeAction();
+    final random = new Random();
+    int i = random.nextInt(2);
+    possibleActions[i].executeAction();
   }
 
   Future<void> botTurn() async {
     await Future.delayed(const Duration(milliseconds: 500));
 
     List<TurnAction> possibleActions = _getTurnActions();
-    print(possibleActions);
-
-    // TODO: cambiar por random, NO por length != 0
-    if (possibleActions.length != 0) {
-      possibleActions[0].executeAction();
+    print("posibble actions: ${possibleActions}");
+    final random = new Random();
+    int i = random.nextInt(2);
+    if (i == 0 && possibleActions.length != 0) {
+      possibleActions[i].executeAction();
     } else {
       botPlayCard();
     }
@@ -249,11 +262,29 @@ class GameProvider with ChangeNotifier {
       notifyListeners();
     } else {
       print("${annotator.getWinnersName} Gana la partida!");
+      if (annotator.getWinnersName != "Trucoide") {
+        final prefs = await SharedPreferences.getInstance();
+        int userId = prefs.getInt('userId') ?? 0;
+        await api.addPointsToUser(userId, 30);
+      }
     }
   }
 
-  // TODO: BORRAR
   String getCurrentPlayerName() {
     return _turn.currentPlayer.name;
+  }
+
+  irseAlMazo() async {
+    annotator.addRoundPointsToOtherPlayer(
+        players[0], this._turn.getPuntosAlIrseAlMazo());
+
+    _turn.swapCurrentPlayer();
+    // reset round
+    await endRound();
+    _turn.desbloquearManos();
+    if (_turn.currentPlayer.isBot) {
+      botTurn();
+    }
+    notifyListeners();
   }
 }
